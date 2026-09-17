@@ -37,7 +37,7 @@ const config: Config = {
         docs: {
           path: '..',
           include: ['basic/**/*.md', 'intermediate/**/*.md', 'advanced/**/*.md'],
-          routeBasePath: '/',
+          routeBasePath: '/docs',
           sidebarPath: './sidebars.ts',
         },
         blog: false,
@@ -62,6 +62,11 @@ const config: Config = {
           sidebarId: 'tutorialSidebar',
           position: 'left',
           label: 'Notes',
+        },
+        {
+          href: 'https://github.com/rishav-jha-mech/learning-linux',
+          label: 'GitHub',
+          position: 'right',
         },
       ],
     },
