@@ -2,8 +2,11 @@ import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
+import styles from './index.module.css';
 
 type Level = {
+  step: string;
+  icon: string;
   title: string;
   description: string;
   href: string;
@@ -11,16 +14,22 @@ type Level = {
 
 const levels: Level[] = [
   {
+    step: 'Step 1',
+    icon: '🐚',
     title: 'Basic',
     description: 'Shell basics, files, permissions, everyday commands.',
     href: '/docs/basic/intro',
   },
   {
+    step: 'Step 2',
+    icon: '⚙️',
     title: 'Intermediate',
     description: 'Processes, networking, shell scripting.',
     href: '/docs/intermediate/intro',
   },
   {
+    step: 'Step 3',
+    icon: '🧠',
     title: 'Advanced',
     description: 'Internals, debugging, containers.',
     href: '/docs/advanced/intro',
@@ -32,19 +41,28 @@ export default function Home(): ReactNode {
     <Layout
       title="learning-linux"
       description="Notes from learning Linux">
-      <main className="container margin-vert--xl">
-        <div className="row">
-          <div className="col col--8 col--offset-2 text--center margin-bottom--lg">
-            <Heading as="h1">learning-linux</Heading>
-            <p>Notes from learning Linux, start to finish: basic, then intermediate, then advanced.</p>
-          </div>
-        </div>
+      <header className={styles.hero}>
+        <span className={styles.heroPrompt}>man learning-linux</span>
+        <Heading as="h1" className={styles.heroTitle}>
+          learning-linux
+        </Heading>
+        <p className={styles.heroSubtitle}>
+          Notes from learning Linux, one command at a time — start to finish:
+          basic, then intermediate, then advanced.
+        </p>
+      </header>
+      <main className={`container ${styles.levels}`}>
         <div className="row">
           {levels.map((level) => (
             <div key={level.title} className="col col--4">
-              <Link to={level.href} className="card padding--lg margin-bottom--lg" style={{height: '100%', display: 'block'}}>
-                <Heading as="h3">{level.title}</Heading>
-                <p>{level.description}</p>
+              <Link to={level.href} className={styles.card}>
+                <span className={styles.cardStep}>{level.step}</span>
+                <span className={styles.cardIcon}>{level.icon}</span>
+                <Heading as="h3" className={styles.cardTitle}>
+                  {level.title}
+                </Heading>
+                <p className={styles.cardDescription}>{level.description}</p>
+                <span className={styles.cardCta}>start reading →</span>
               </Link>
             </div>
           ))}

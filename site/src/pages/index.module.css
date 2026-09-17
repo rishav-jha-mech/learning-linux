@@ -1,0 +1,89 @@
+.hero {
+  padding: 5rem 1rem 3.5rem;
+  text-align: center;
+  background: linear-gradient(180deg, var(--ifm-color-emphasis-100) 0%, transparent 100%);
+}
+
+.heroPrompt {
+  display: inline-block;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 1rem;
+  color: var(--ifm-color-primary);
+  background: var(--ifm-color-emphasis-200);
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+}
+
+.heroPrompt::before {
+  content: '$ ';
+  opacity: 0.6;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  font-family: var(--ifm-font-family-monospace);
+  margin-bottom: 0.75rem;
+}
+
+.heroSubtitle {
+  font-size: 1.15rem;
+  max-width: 40rem;
+  margin: 0 auto;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.levels {
+  padding: 1rem 0 4rem;
+}
+
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.75rem;
+  border-radius: var(--ifm-card-border-radius);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-surface-color);
+  transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  color: var(--ifm-font-color-base);
+  text-decoration: none !important;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  color: var(--ifm-font-color-base);
+}
+
+.cardStep {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--ifm-color-primary);
+  text-transform: uppercase;
+}
+
+.cardIcon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.cardTitle {
+  margin: 0;
+}
+
+.cardDescription {
+  color: var(--ifm-color-emphasis-700);
+  margin: 0;
+  flex-grow: 1;
+}
+
+.cardCta {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+  color: var(--ifm-color-primary);
+}
