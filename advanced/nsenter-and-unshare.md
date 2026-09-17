@@ -86,7 +86,7 @@ Test connectivity to a service exactly as it appears from inside a specific cont
 ## Related Commands
 
 * `docker exec` / `docker inspect` — higher-level tools built on these same primitives
-* `cgroups` (not a single command, but a related kernel feature) — resource limiting, complementary to namespace isolation
+* [cgroups, namespaces, and capabilities](/docs/advanced/cgroups-namespaces-capabilities) — resource limiting and privilege control, complementary to namespace isolation
 * `chroot` — an older, more limited form of filesystem isolation, a precursor to mount namespaces
 
 ## Practice
