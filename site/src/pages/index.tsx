@@ -5,137 +5,78 @@ import Heading from '@theme/Heading';
 import styles from './index.module.css';
 
 type Level = {
-  step: string;
-  icon: string;
+  index: string;
   title: string;
   description: string;
-  topics: string[];
+  count: string;
   href: string;
 };
 
 const levels: Level[] = [
   {
-    step: 'Step 1',
-    icon: '🐚',
+    index: '01',
     title: 'Basic',
     description: 'Shell basics, files, permissions, everyday commands.',
-    topics: ['ls', 'cd', 'grep', 'chmod'],
+    count: '24 pages',
     href: '/docs/basic/intro',
   },
   {
-    step: 'Step 2',
-    icon: '⚙️',
+    index: '02',
     title: 'Intermediate',
     description: 'Processes, networking, shell scripting.',
-    topics: ['ps', 'ssh', 'awk', 'systemctl'],
+    count: '24 pages',
     href: '/docs/intermediate/intro',
   },
   {
-    step: 'Step 3',
-    icon: '🧠',
+    index: '03',
     title: 'Advanced',
     description: 'Internals, debugging, containers.',
-    topics: ['strace', 'perf', 'cgroups', 'namespaces'],
+    count: '16 pages',
     href: '/docs/advanced/intro',
   },
 ];
-
-const stats = [
-  {number: '24', label: 'Basic'},
-  {number: '24', label: 'Intermediate'},
-  {number: '16', label: 'Advanced'},
-];
-
-function ArrowIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path
-        d="M3 8h10M9 4l4 4-4 4"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 export default function Home(): ReactNode {
   return (
     <Layout title="learning-linux" description="Notes from learning Linux">
       <header className={styles.hero}>
-        <div className={styles.heroGrid} aria-hidden="true" />
-        <div className={`container ${styles.heroContent}`}>
-          <div className={styles.terminal} aria-hidden="true">
-            <div className={styles.terminalBar}>
-              <span className={styles.terminalDot} />
-              <span className={styles.terminalDot} />
-              <span className={styles.terminalDot} />
-            </div>
-            <div className={styles.terminalBody}>
-              <div className={styles.terminalLine}>
-                <span className={styles.terminalPrompt}>$</span>
-                man learning-linux
-              </div>
-              <div className={styles.terminalOutput}>
-                basic → intermediate → advanced<span className={styles.cursor} />
-              </div>
-            </div>
-          </div>
-
+        <div className={`container ${styles.heroInner}`}>
+          <div className={styles.kicker}>A personal Linux reference</div>
           <Heading as="h1" className={styles.heroTitle}>
-            learning<span className={styles.accent}>-</span>linux
+            learning-linux
           </Heading>
           <p className={styles.heroSubtitle}>
             Notes from learning Linux, one command at a time, in order:
             basic, then intermediate, then advanced.
           </p>
-
-          <div className={styles.heroStats}>
-            {stats.map((stat) => (
-              <div key={stat.label} className={styles.stat}>
-                <span className={styles.statNumber}>{stat.number}</span>
-                <span className={styles.statLabel}>{stat.label}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </header>
 
       <main className="container">
         <div className={styles.levels}>
-          <div className={styles.levelsHeading}>
-            <Heading as="h2">Pick up where you are</Heading>
-            <p>Each section builds on the last, but you can jump in anywhere.</p>
-          </div>
-
-          <div className={`row ${styles.path}`}>
-            <div className={styles.pathLine} aria-hidden="true" />
-            {levels.map((level) => (
-              <div key={level.title} className="col col--4">
-                <Link to={level.href} className={styles.card}>
-                  <span className={styles.cardIconWrap}>{level.icon}</span>
-                  <span className={styles.cardStep}>{level.step}</span>
-                  <Heading as="h3" className={styles.cardTitle}>
-                    {level.title}
-                  </Heading>
-                  <p className={styles.cardDescription}>{level.description}</p>
-                  <div className={styles.cardTopics}>
-                    {level.topics.map((topic) => (
-                      <code key={topic} className={styles.cardTopic}>
-                        {topic}
-                      </code>
-                    ))}
-                  </div>
-                  <span className={styles.cardCta}>
-                    Start reading <ArrowIcon />
-                  </span>
-                </Link>
-              </div>
-            ))}
-          </div>
+          {levels.map((level) => (
+            <Link key={level.title} to={level.href} className={styles.levelRow}>
+              <span className={styles.levelIndex}>{level.index}</span>
+              <span className={styles.levelMain}>
+                <Heading as="h2" className={styles.levelTitle}>
+                  {level.title}
+                </Heading>
+                <p className={styles.levelDescription}>{level.description}</p>
+                <span className={styles.levelMeta}>
+                  <span className={styles.levelCount}>{level.count}</span>
+                  <span className={styles.levelArrow}>&rarr;</span>
+                </span>
+              </span>
+            </Link>
+          ))}
         </div>
       </main>
+
+      <footer className={styles.footer}>
+        <p className={styles.footerCredit}>
+          Built by <a href="https://rishavjha.com">rishavjha.com</a>
+        </p>
+      </footer>
     </Layout>
   );
 }
