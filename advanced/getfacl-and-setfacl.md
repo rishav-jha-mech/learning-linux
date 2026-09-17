@@ -4,7 +4,7 @@ sidebar_position: 9
 
 # getfacl and setfacl
 
-View and set Access Control Lists (ACLs) — permissions beyond the standard owner/group/other model.
+View and set Access Control Lists (ACLs): permissions beyond the standard owner/group/other model.
 
 ## Mental Model
 
@@ -44,7 +44,7 @@ other::r--
 
 | Option | Meaning |
 | --- | --- |
-| `-m` | Modify — add or change an ACL entry |
+| `-m` | Modify: add or change an ACL entry |
 | `-x` | Remove a specific ACL entry |
 | `-b` | Remove all ACL entries, back to standard permissions only |
 | `-R` | Apply recursively to a directory |
@@ -52,7 +52,7 @@ other::r--
 
 ## How It Works
 
-ACLs are stored as extended attributes on the filesystem (most Linux filesystems support this, given it's enabled), separate from the classic permission bits shown by `ls -l`. When ACLs are present, `ls -l` shows a `+` after the permission string as a hint that more detailed rules exist beyond what's visible in the basic `rwx` display — `getfacl` is needed to see the full picture. The `mask` entry is important and often misunderstood: it caps the *effective* maximum permissions for any named user/group ACL entry, regardless of what the entry itself grants.
+ACLs are stored as extended attributes on the filesystem (most Linux filesystems support this, given it's enabled), separate from the classic permission bits shown by `ls -l`. When ACLs are present, `ls -l` shows a `+` after the permission string as a hint that more detailed rules exist beyond what's visible in the basic `rwx` display. `getfacl` is needed to see the full picture. The `mask` entry is important and often misunderstood: it caps the *effective* maximum permissions for any named user/group ACL entry, regardless of what the entry itself grants.
 
 ## Real-World Examples
 
@@ -84,15 +84,15 @@ Grant a group access to an existing directory tree recursively, and set a defaul
 
 ## Common Mistakes
 
-* Forgetting the `mask` entry limits effective permissions — setting `setfacl -m u:bob:rwx` but having a `mask::r--` means bob's effective permission is only read, despite the entry saying `rwx`. Check `getfacl`'s output fully, not just the entry you added.
-* Setting an ACL on a directory without `-d` and expecting new files created inside it to inherit the same permissions — regular `-m` only affects the directory itself, not future contents; `-d` is required for inheritance.
-* Not realizing ACL support can be disabled or unavailable on certain filesystems/mount options — `setfacl` will fail outright if the filesystem wasn't mounted with ACL support.
+* Forgetting the `mask` entry limits effective permissions: setting `setfacl -m u:bob:rwx` but having a `mask::r--` means bob's effective permission is only read, despite the entry saying `rwx`. Check `getfacl`'s output fully, not just the entry you added.
+* Setting an ACL on a directory without `-d` and expecting new files created inside it to inherit the same permissions: regular `-m` only affects the directory itself, not future contents; `-d` is required for inheritance.
+* Not realizing ACL support can be disabled or unavailable on certain filesystems/mount options: `setfacl` will fail outright if the filesystem wasn't mounted with ACL support.
 
 ## Related Commands
 
-* `chmod` / `chown` — the standard permission model ACLs extend
-- `ls -l` — shows a `+` suffix hinting that ACLs exist on a file
-* `umask` — default permission behavior, independent of ACLs
+* `chmod` / `chown`: the standard permission model ACLs extend
+- `ls -l`: shows a `+` suffix hinting that ACLs exist on a file
+* `umask`: default permission behavior, independent of ACLs
 
 ## Practice
 

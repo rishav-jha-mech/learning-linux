@@ -67,7 +67,7 @@ chmod o=r file.txt      # set others' permission to exactly read
 
 ## How It Works
 
-Permission bits live in the file's inode. `chmod` calls the `chmod()` system call, which the kernel checks and applies directly — no data in the file itself is touched, only its metadata. The kernel enforces these bits on every subsequent access: a process without execute permission on a file gets denied at the `exec()` system call, not by some higher-level check.
+Permission bits live in the file's inode. `chmod` calls the `chmod()` system call, which the kernel checks and applies directly: no data in the file itself is touched, only its metadata. The kernel enforces these bits on every subsequent access: a process without execute permission on a file gets denied at the `exec()` system call, not by some higher-level check.
 
 ## Real-World Examples
 
@@ -88,19 +88,19 @@ chmod -R 755 /var/www/html
 chmod +x script.sh && ./script.sh
 ```
 
-Make executable, then run — a pattern you'll type constantly after downloading or writing shell scripts.
+Make executable, then run: a pattern you'll type constantly after downloading or writing shell scripts.
 
 ## Common Mistakes
 
-* Using `chmod 777` "to make it work" — this grants write and execute to everyone, a common and serious security mistake, especially on shared or internet-facing systems.
-* Forgetting SSH refuses to use private keys with overly permissive modes (e.g. `644`) — SSH expects `600` and will reject or warn on keys readable by others.
-* Confusing `chmod` (permissions) with `chown` (ownership) — they solve different problems and are often needed together.
+* Using `chmod 777` "to make it work": this grants write and execute to everyone, a common and serious security mistake, especially on shared or internet-facing systems.
+* Forgetting SSH refuses to use private keys with overly permissive modes (e.g. `644`). SSH expects `600` and will reject or warn on keys readable by others.
+* Confusing `chmod` (permissions) with `chown` (ownership): they solve different problems and are often needed together.
 
 ## Related Commands
 
-* `chown` — change file owner and group
-* `umask` — set default permissions for newly created files
-* `ls -l` — inspect current permissions
+* `chown`: change file owner and group
+* `umask`: set default permissions for newly created files
+* `ls -l`: inspect current permissions
 
 ## Practice
 

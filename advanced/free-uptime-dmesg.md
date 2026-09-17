@@ -8,7 +8,7 @@ Quick system health checks: memory (`free`), load and time up (`uptime`), and ke
 
 ## Mental Model
 
-These are the fastest "is everything okay?" checks on a Linux machine — no interval sampling needed, just an instant snapshot of memory, how loaded the system has been, and any low-level kernel events worth knowing about.
+These are the fastest "is everything okay?" checks on a Linux machine: no interval sampling needed, just an instant snapshot of memory, how loaded the system has been, and any low-level kernel events worth knowing about.
 
 ## Syntax
 
@@ -53,7 +53,7 @@ Output:
 
 ## How It Works
 
-`free` reads `/proc/meminfo`, which the kernel keeps updated with memory statistics — its most misunderstood column is `buff/cache`: this memory isn't wasted, it's the kernel using otherwise-idle RAM to cache disk data for speed, and it's reclaimed instantly if an application needs it (which is why `available` is the number that actually matters, not raw `free`). `uptime`'s load average is a measure of how many processes were runnable (running or waiting for CPU) on average over the last 1, 5, and 15 minutes — a load average above your CPU core count sustained over time suggests the system is CPU-bound. `dmesg` prints the kernel's own ring buffer of messages — hardware events, driver output, and critical errors the kernel logs directly, often before any user-space logging even starts.
+`free` reads `/proc/meminfo`, which the kernel keeps updated with memory statistics. Its most misunderstood column is `buff/cache`: this memory isn't wasted, it's the kernel using otherwise-idle RAM to cache disk data for speed, and it's reclaimed instantly if an application needs it (which is why `available` is the number that actually matters, not raw `free`). `uptime`'s load average is a measure of how many processes were runnable (running or waiting for CPU) on average over the last 1, 5, and 15 minutes. A load average above your CPU core count sustained over time suggests the system is CPU-bound. `dmesg` prints the kernel's own ring buffer of messages: hardware events, driver output, and critical errors the kernel logs directly, often before any user-space logging even starts.
 
 ## Real-World Examples
 
@@ -77,19 +77,19 @@ dmesg -w
 dmesg -T | grep -i "out of memory"
 ```
 
-Check whether the kernel's OOM (out-of-memory) killer has terminated any processes recently — a common root cause when a service mysteriously disappears without an obvious application-level error.
+Check whether the kernel's OOM (out-of-memory) killer has terminated any processes recently, a common root cause when a service mysteriously disappears without an obvious application-level error.
 
 ## Common Mistakes
 
-* Panicking over low "free" memory in `free`'s raw `free` column without checking `available` — Linux deliberately uses spare RAM for disk caching, so a low `free` number with a healthy `available` number is completely normal, not a problem.
-* Reading load average without knowing how many CPU cores the machine has — a load average of 4 is fine on a 16-core machine and concerning on a 2-core one.
-* Not checking `dmesg` when a process disappears unexpectedly — the OOM killer logs its actions there, and it's often the fastest way to confirm whether that's what happened.
+* Panicking over low "free" memory in `free`'s raw `free` column without checking `available`: Linux deliberately uses spare RAM for disk caching, so a low `free` number with a healthy `available` number is completely normal, not a problem.
+* Reading load average without knowing how many CPU cores the machine has: a load average of 4 is fine on a 16-core machine and concerning on a 2-core one.
+* Not checking `dmesg` when a process disappears unexpectedly: the OOM killer logs its actions there, and it's often the fastest way to confirm whether that's what happened.
 
 ## Related Commands
 
-* `top` / `vmstat` — more detailed, live views of the same underlying data
-* `journalctl -k` — modern systemd-based way to view kernel messages, similar purpose to `dmesg`
-* `cat /proc/meminfo` — the raw data `free` is built on top of
+* `top` / `vmstat`: more detailed, live views of the same underlying data
+* `journalctl -k`: modern systemd-based way to view kernel messages, similar purpose to `dmesg`
+* `cat /proc/meminfo`: the raw data `free` is built on top of
 
 ## Practice
 

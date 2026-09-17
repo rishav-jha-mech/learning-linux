@@ -8,7 +8,7 @@ Opens the manual page for a command, explaining its usage in full detail.
 
 ## Mental Model
 
-Almost every standard Linux command ships with its own reference documentation, installed alongside it. `man` is how you read that documentation without leaving the terminal — it's the built-in answer to "how do I use this?"
+Almost every standard Linux command ships with its own reference documentation, installed alongside it. `man` is how you read that documentation without leaving the terminal: it's the built-in answer to "how do I use this?"
 
 ## Syntax
 
@@ -33,7 +33,7 @@ Opens `ls`'s manual page in a pager (usually `less`), showing its description, o
 
 ## Manual Sections
 
-Manual pages are organized into numbered sections — this matters because some names exist in more than one:
+Manual pages are organized into numbered sections: this matters because some names exist in more than one:
 
 | Section | Contents |
 | --- | --- |
@@ -45,7 +45,7 @@ Manual pages are organized into numbered sections — this matters because some 
 
 ```bash
 man 2 open     # the open() system call
-man 1 open     # rarely exists, but demonstrates the concept — sections disambiguate identical names
+man 1 open     # rarely exists, but demonstrates the concept: sections disambiguate identical names
 ```
 
 ## How It Works
@@ -71,19 +71,19 @@ man 2 fork
 man grep | grep -A2 "\-i"
 ```
 
-Search inside a man page's text for a specific option's explanation — useful when a manual page is very long and you just need one flag's meaning.
+Search inside a man page's text for a specific option's explanation: useful when a manual page is very long and you just need one flag's meaning.
 
 ## Common Mistakes
 
-* Not knowing manual sections exist, and being confused when `man printf` shows the shell command instead of the C library function (or vice versa) — specify the section number to disambiguate.
-* Giving up on `man` for being "too dense" instead of jumping straight to the relevant section — most man pages follow a predictable structure (NAME, SYNOPSIS, DESCRIPTION, OPTIONS, EXAMPLES) you can navigate to directly with `/OPTIONS` inside `less`.
+* Not knowing manual sections exist, and being confused when `man printf` shows the shell command instead of the C library function (or vice versa). Specify the section number to disambiguate.
+* Giving up on `man` for being "too dense" instead of jumping straight to the relevant section: most man pages follow a predictable structure (NAME, SYNOPSIS, DESCRIPTION, OPTIONS, EXAMPLES) you can navigate to directly with `/OPTIONS` inside `less`.
 * Forgetting `q` quits the man page, since it's just displayed through `less`.
 
 ## Related Commands
 
-* `--help` — a quicker, shorter summary many commands print directly, without opening a full manual page
-* `info` — a different, often more tutorial-style documentation system used by some GNU tools
-* `apropos` — equivalent to `man -k`, searches man page descriptions by keyword
+* `--help`: a quicker, shorter summary many commands print directly, without opening a full manual page
+* `info`: a different, often more tutorial-style documentation system used by some GNU tools
+* `apropos`: equivalent to `man -k`, searches man page descriptions by keyword
 
 ## Practice
 

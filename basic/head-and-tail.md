@@ -8,7 +8,7 @@ Print the beginning (`head`) or end (`tail`) of a file.
 
 ## Mental Model
 
-Both commands answer "just show me a piece of this file, not all of it." `head` looks at the start, `tail` looks at the end — the two most common places you actually want to look first.
+Both commands answer "just show me a piece of this file, not all of it." `head` looks at the start, `tail` looks at the end: the two most common places you actually want to look first.
 
 ## Syntax
 
@@ -24,7 +24,7 @@ head access.log
 tail access.log
 ```
 
-Each prints 10 lines by default — the first 10 for `head`, the last 10 for `tail`.
+Each prints 10 lines by default: the first 10 for `head`, the last 10 for `tail`.
 
 ## Common Options
 
@@ -38,7 +38,7 @@ Each prints 10 lines by default — the first 10 for `head`, the last 10 for `ta
 
 ## How It Works
 
-`head` reads from the start of the file and stops once it hits the line count — efficient because it never has to read past what it prints. `tail` is trickier: without knowing line boundaries in advance, showing "the last N lines" means seeking near the end of the file and scanning backward (or forward from a calculated offset), which is why `tail` on a giant file is still fast, unlike naively reading the whole thing. `tail -f` keeps the file open and uses filesystem notifications (or polling) to detect new data appended to it.
+`head` reads from the start of the file and stops once it hits the line count, efficient because it never has to read past what it prints. `tail` is trickier: without knowing line boundaries in advance, showing "the last N lines" means seeking near the end of the file and scanning backward (or forward from a calculated offset), which is why `tail` on a giant file is still fast, unlike naively reading the whole thing. `tail -f` keeps the file open and uses filesystem notifications (or polling) to detect new data appended to it.
 
 ## Real-World Examples
 
@@ -70,14 +70,14 @@ Preview the first 20 rows of a CSV formatted into aligned columns.
 ## Common Mistakes
 
 * Forgetting `-f` exists and repeatedly re-running `tail` to check for new log lines.
-* Using `tail -f` on a file that gets rotated (renamed and replaced) by logging tools — `tail -f` keeps watching the old (now renamed) file unless you use `tail -F`, which re-opens the file by name.
-* Assuming `head`/`tail` count characters, not lines, by default — use `-c` explicitly if you want bytes.
+* Using `tail -f` on a file that gets rotated (renamed and replaced) by logging tools. `tail -f` keeps watching the old (now renamed) file unless you use `tail -F`, which re-opens the file by name.
+* Assuming `head`/`tail` count characters, not lines, by default: use `-c` explicitly if you want bytes.
 
 ## Related Commands
 
-* `cat` — show the whole file at once
-* `less` — page through interactively, including jumping to the end with `G`
-* `watch` — repeatedly re-run a command, an alternative way to observe changing output
+* `cat`: show the whole file at once
+* `less`: page through interactively, including jumping to the end with `G`
+* `watch`: repeatedly re-run a command, an alternative way to observe changing output
 
 ## Practice
 

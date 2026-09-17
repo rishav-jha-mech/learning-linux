@@ -46,7 +46,7 @@ alice 812   2.3   1.5  node server.js
 
 ## How It Works
 
-Process information on Linux lives in the `/proc` filesystem — a virtual filesystem exposing kernel data as files, one directory per running PID (e.g. `/proc/1234/status`). Both `ps` and `top` read from `/proc` rather than asking the kernel through some special API; they're essentially formatting tools over data the kernel already publishes there. `top` just re-reads `/proc` on an interval and redraws the screen.
+Process information on Linux lives in the `/proc` filesystem: a virtual filesystem exposing kernel data as files, one directory per running PID (e.g. `/proc/1234/status`). Both `ps` and `top` read from `/proc` rather than asking the kernel through some special API; they're essentially formatting tools over data the kernel already publishes there. `top` just re-reads `/proc` on an interval and redraws the screen.
 
 ## Real-World Examples
 
@@ -67,19 +67,19 @@ ps -ef --forest
 ps aux | sort -rk3 | head -5
 ```
 
-List the top 5 processes by CPU usage (column 3 in `ps aux` output) without needing `top`'s live view — useful in scripts or over a connection where an interactive dashboard isn't convenient.
+List the top 5 processes by CPU usage (column 3 in `ps aux` output) without needing `top`'s live view: useful in scripts or over a connection where an interactive dashboard isn't convenient.
 
 ## Common Mistakes
 
-* Confusing `%CPU` in `ps`/`top` with "percent of all cores" — on a multi-core machine, a single-threaded process pegging one core can show close to 100%, and a process using several cores can show well over 100%.
-* Killing the wrong PID because two processes have similar names — always double-check the PID and full command line (`ps aux | grep name`) before sending a signal.
+* Confusing `%CPU` in `ps`/`top` with "percent of all cores": on a multi-core machine, a single-threaded process pegging one core can show close to 100%, and a process using several cores can show well over 100%.
+* Killing the wrong PID because two processes have similar names: always double-check the PID and full command line (`ps aux | grep name`) before sending a signal.
 * Not knowing `top` has interactive sorting (`P` for CPU, `M` for memory) and instead running `ps` repeatedly by hand.
 
 ## Related Commands
 
-* `htop` — a more user-friendly, colorized alternative to `top`
-* `kill` / `pkill` — send signals to processes found via `ps`/`top`
-* `pgrep` — find PIDs by name without the full `ps` output
+* `htop`: a more user-friendly, colorized alternative to `top`
+* `kill` / `pkill`: send signals to processes found via `ps`/`top`
+* `pgrep`: find PIDs by name without the full `ps` output
 
 ## Practice
 

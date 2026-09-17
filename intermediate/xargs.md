@@ -8,7 +8,7 @@ Builds and runs commands using input from another command, one argument list at 
 
 ## Mental Model
 
-Many commands (like `rm` or `chmod`) take arguments directly on the command line — they don't read filenames from stdin. `xargs` bridges that gap: it takes lines from stdin and turns them into arguments for a command you specify.
+Many commands (like `rm` or `chmod`) take arguments directly on the command line; they don't read filenames from stdin. `xargs` bridges that gap: it takes lines from stdin and turns them into arguments for a command you specify.
 
 ## Syntax
 
@@ -35,7 +35,7 @@ find . -name "*.tmp" | xargs rm
 
 ## How It Works
 
-`xargs` reads its input, splits it into chunks that fit within the system's command-line length limit, and invokes the target command with those chunks as arguments — potentially running the command multiple times if there's more input than fits in one invocation. This chunking is invisible in normal use but matters at scale: `xargs` handles a million filenames correctly by batching them, where trying to build one giant command line by hand would fail.
+`xargs` reads its input, splits it into chunks that fit within the system's command-line length limit, and invokes the target command with those chunks as arguments, potentially running the command multiple times if there's more input than fits in one invocation. This chunking is invisible in normal use but matters at scale: `xargs` handles a million filenames correctly by batching them, where trying to build one giant command line by hand would fail.
 
 ## Real-World Examples
 
@@ -60,15 +60,15 @@ Download every URL listed in a file, one `curl` call per line.
 
 ## Common Mistakes
 
-* Piping `find` output into `xargs` without `-print0`/`-0` when filenames might contain spaces or newlines — plain newline-separated input breaks on those, silently mangling commands. Use `find -print0 | xargs -0` for anything that touches arbitrary user-created filenames.
-* Forgetting `-I {}` is needed when you want the input value to go somewhere other than the end of the command — without it, `xargs` just appends arguments at the end.
+* Piping `find` output into `xargs` without `-print0`/`-0` when filenames might contain spaces or newlines. Plain newline-separated input breaks on those, silently mangling commands. Use `find -print0 | xargs -0` for anything that touches arbitrary user-created filenames.
+* Forgetting `-I {}` is needed when you want the input value to go somewhere other than the end of the command. Without it, `xargs` just appends arguments at the end.
 * Running a destructive `xargs` command (like `rm`) without testing the pipeline first using `echo` in place of the real command, to preview exactly what would run.
 
 ## Related Commands
 
-* `find -exec` — an alternative way to run a command per match, without needing `xargs` at all
-* `parallel` (GNU parallel) — like `xargs` but runs commands concurrently
-* `find` — the most common source of input piped into `xargs`
+* `find -exec`: an alternative way to run a command per match, without needing `xargs` at all
+* `parallel` (GNU parallel): like `xargs` but runs commands concurrently
+* `find`: the most common source of input piped into `xargs`
 
 ## Practice
 

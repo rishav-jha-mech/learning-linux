@@ -37,7 +37,7 @@ Output:
 
 | Option | Meaning |
 | --- | --- |
-| `-u` | Unified format — more readable, the format used by patches and git diffs |
+| `-u` | Unified format: more readable, the format used by patches and git diffs |
 | `-r` | Compare directories recursively |
 | `-q` | Just report whether files differ, without showing the details |
 | `-i` | Ignore case differences |
@@ -59,11 +59,11 @@ Output:
 +new line
 ```
 
-Lines starting with `-` were removed, `+` were added, and unmarked lines are context — this is the format almost all tooling (git, patch files, code review diffs) uses.
+Lines starting with `-` were removed, `+` were added, and unmarked lines are context. This is the format almost all tooling (git, patch files, code review diffs) uses.
 
 ## How It Works
 
-`diff` computes a line-by-line comparison using an algorithm (typically a variant of the longest common subsequence problem) to find the smallest set of edits connecting the two files. It doesn't understand the *meaning* of the content — a single character change on a line still shows the entire line as removed and re-added, since `diff` operates at line granularity by default.
+`diff` computes a line-by-line comparison using an algorithm (typically a variant of the longest common subsequence problem) to find the smallest set of edits connecting the two files. It doesn't understand the *meaning* of the content: a single character change on a line still shows the entire line as removed and re-added, since `diff` operates at line granularity by default.
 
 ## Real-World Examples
 
@@ -88,15 +88,15 @@ Save a diff as a patch file, which can later be applied elsewhere with the `patc
 
 ## Common Mistakes
 
-* Reading raw (non-unified) `diff` output and finding it hard to parse — `-u` is almost always worth adding for readability.
-* Assuming `diff` understands code structure or semantics — it's purely line-based text comparison, so reordering identical lines can produce a larger, noisier diff than expected.
-* Comparing files with different line endings (e.g. Windows CRLF vs Unix LF) and getting a diff on every single line — normalize line endings first if that's not the actual change you care about.
+* Reading raw (non-unified) `diff` output and finding it hard to parse: `-u` is almost always worth adding for readability.
+* Assuming `diff` understands code structure or semantics: it's purely line-based text comparison, so reordering identical lines can produce a larger, noisier diff than expected.
+* Comparing files with different line endings (e.g. Windows CRLF vs Unix LF) and getting a diff on every single line: normalize line endings first if that's not the actual change you care about.
 
 ## Related Commands
 
-* `patch` — apply a diff's changes to a file
-* `git diff` — the same underlying concept, integrated into version control
-* `cmp` — a simpler byte-by-byte comparison, useful for binary files
+* `patch`: apply a diff's changes to a file
+* `git diff`: the same underlying concept, integrated into version control
+* `cmp`: a simpler byte-by-byte comparison, useful for binary files
 
 ## Practice
 

@@ -8,7 +8,7 @@ Make HTTP(S) requests and download files from the command line.
 
 ## Mental Model
 
-Both tools speak HTTP (and other protocols) from the terminal — `curl` leans toward "make a request and let me inspect/script the result," while `wget` leans toward "download this file to disk, reliably." Their default behaviors reflect that difference.
+Both tools speak HTTP (and other protocols) from the terminal: `curl` leans toward "make a request and let me inspect/script the result," while `wget` leans toward "download this file to disk, reliably." Their default behaviors reflect that difference.
 
 ## Syntax
 
@@ -44,7 +44,7 @@ Downloads `file.zip` to the current directory, showing a progress bar.
 | `-d data` | Send data in the request body (e.g. for POST) |
 | `-H "Header: value"` | Add a custom request header |
 | `-L` | Follow redirects |
-| `-s` | Silent — suppress progress output |
+| `-s` | Silent: suppress progress output |
 
 `wget`:
 
@@ -56,7 +56,7 @@ Downloads `file.zip` to the current directory, showing a progress bar.
 
 ## How It Works
 
-Both tools open a TCP connection to the target host, perform a TLS handshake for HTTPS, then send a raw HTTP request and parse the response — the same protocol your browser uses, just without rendering anything. `curl`'s design as a library (`libcurl`) underneath means it supports a huge range of protocols and is heavily used inside scripts and other programs; `wget` is more narrowly focused on robust downloading, including resuming interrupted transfers by requesting a specific byte range with `-c`.
+Both tools open a TCP connection to the target host, perform a TLS handshake for HTTPS, then send a raw HTTP request and parse the response, the same protocol your browser uses, just without rendering anything. `curl`'s design as a library (`libcurl`) underneath means it supports a huge range of protocols and is heavily used inside scripts and other programs; `wget` is more narrowly focused on robust downloading, including resuming interrupted transfers by requesting a specific byte range with `-c`.
 
 ## Real-World Examples
 
@@ -80,19 +80,19 @@ wget -c https://example.com/large-file.iso
 curl -s https://api.example.com/data | jq '.results[0]'
 ```
 
-Fetch JSON from an API and pipe it into `jq` to extract a specific field — a very common pattern for scripting against APIs.
+Fetch JSON from an API and pipe it into `jq` to extract a specific field: a very common pattern for scripting against APIs.
 
 ## Common Mistakes
 
-* Forgetting `-L` when a URL redirects — plain `curl` doesn't follow redirects by default, so you might get a mostly-empty response instead of the content you expected.
-* Using `curl url > file` instead of `curl -O url` or `curl -o file url` — the redirect approach works, but loses `curl`'s progress reporting and error handling around partial writes.
-* Not checking the HTTP status code — a failed request (404, 500) can still "succeed" from the shell's point of view and print an error page as if it were valid content; `curl -f` makes `curl` fail loudly on HTTP errors instead.
+* Forgetting `-L` when a URL redirects: plain `curl` doesn't follow redirects by default, so you might get a mostly-empty response instead of the content you expected.
+* Using `curl url > file` instead of `curl -O url` or `curl -o file url`: the redirect approach works, but loses `curl`'s progress reporting and error handling around partial writes.
+* Not checking the HTTP status code: a failed request (404, 500) can still "succeed" from the shell's point of view and print an error page as if it were valid content; `curl -f` makes `curl` fail loudly on HTTP errors instead.
 
 ## Related Commands
 
-* `jq` — parse and filter JSON, often paired with `curl` for API work
-* `httpie` — a more human-friendly alternative to `curl` for interactive API testing
-* `ping` — check basic network reachability, a different layer than HTTP
+* `jq`: parse and filter JSON, often paired with `curl` for API work
+* `httpie`: a more human-friendly alternative to `curl` for interactive API testing
+* `ping`: check basic network reachability, a different layer than HTTP
 
 ## Practice
 

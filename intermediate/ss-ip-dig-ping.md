@@ -62,7 +62,7 @@ Sends 4 ICMP echo requests and reports round-trip times.
 
 ## How It Works
 
-`ip` reads network interface and routing information the kernel maintains — the same data older tools like `ifconfig` and `route` exposed, in a more modern, consistent interface. `ss` ("socket statistics") queries the kernel's socket tables to list active and listening connections, replacing the older `netstat`. `ping` sends ICMP echo request packets and waits for echo replies, directly testing basic network-layer reachability. `dig` sends a DNS query to a resolver and prints the structured response — useful for debugging DNS issues independent of whether the actual service is reachable.
+`ip` reads network interface and routing information the kernel maintains, the same data older tools like `ifconfig` and `route` exposed, in a more modern, consistent interface. `ss` ("socket statistics") queries the kernel's socket tables to list active and listening connections, replacing the older `netstat`. `ping` sends ICMP echo request packets and waits for echo replies, directly testing basic network-layer reachability. `dig` sends a DNS query to a resolver and prints the structured response: useful for debugging DNS issues independent of whether the actual service is reachable.
 
 ## Real-World Examples
 
@@ -86,19 +86,19 @@ ping -c 4 8.8.8.8
 ss -tulnp | grep LISTEN
 ```
 
-Show only sockets actively listening for connections, filtering out established/closed ones — the fastest way to answer "what's running a server on this machine right now?"
+Show only sockets actively listening for connections, filtering out established/closed ones: the fastest way to answer "what's running a server on this machine right now?"
 
 ## Common Mistakes
 
-* Reaching for `ifconfig` or `netstat` on modern distros — both are deprecated in favor of `ip` and `ss` respectively, and may not even be installed by default anymore.
-* Assuming a failed `ping` always means "the service is down" — many servers and firewalls block ICMP specifically while still serving HTTP/other traffic fine; `ping` tests basic reachability, not a specific service.
-* Debugging "can't connect" issues without first checking DNS with `dig` — a connection failure that's actually a DNS resolution problem looks identical to a network-layer problem until you isolate which layer is failing.
+* Reaching for `ifconfig` or `netstat` on modern distros: both are deprecated in favor of `ip` and `ss` respectively, and may not even be installed by default anymore.
+* Assuming a failed `ping` always means "the service is down": many servers and firewalls block ICMP specifically while still serving HTTP/other traffic fine; `ping` tests basic reachability, not a specific service.
+* Debugging "can't connect" issues without first checking DNS with `dig`: a connection failure that's actually a DNS resolution problem looks identical to a network-layer problem until you isolate which layer is failing.
 
 ## Related Commands
 
-* `traceroute` / `mtr` — see the network path (hops) to a destination, useful when `ping` succeeds but is slow or when troubleshooting where latency is introduced
-* `nslookup` — an older DNS lookup tool, similar purpose to `dig`
-* `curl -I` — test actual HTTP-layer reachability, one level above what `ping` checks
+* `traceroute` / `mtr`: see the network path (hops) to a destination, useful when `ping` succeeds but is slow or when troubleshooting where latency is introduced
+* `nslookup`: an older DNS lookup tool, similar purpose to `dig`
+* `curl -I`: test actual HTTP-layer reachability, one level above what `ping` checks
 
 ## Practice
 

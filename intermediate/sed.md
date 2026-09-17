@@ -4,11 +4,11 @@ sidebar_position: 9
 
 # sed
 
-Stream editor — transforms text line by line using pattern-based rules.
+Stream editor: transforms text line by line using pattern-based rules.
 
 ## Mental Model
 
-`sed` reads input one line at a time, applies your editing commands to each line, and prints the result. Unlike opening a file in an editor, nothing about `sed`'s process is interactive — it's a script that edits text as it flows through, which makes it perfect for automated, repeatable text transformations.
+`sed` reads input one line at a time, applies your editing commands to each line, and prints the result. Unlike opening a file in an editor, nothing about `sed`'s process is interactive: it's a script that edits text as it flows through, which makes it perfect for automated, repeatable text transformations.
 
 ## Syntax
 
@@ -28,13 +28,13 @@ Output:
 hello linux
 ```
 
-`s/pattern/replacement/` is the substitute command — the one you'll use by far the most.
+`s/pattern/replacement/` is the substitute command, the one you'll use by far the most.
 
 ## Common Options
 
 | Option | Meaning |
 | --- | --- |
-| `-i` | Edit files in place (careful — this overwrites the original) |
+| `-i` | Edit files in place (careful: this overwrites the original) |
 | `-n` | Suppress automatic printing (used with `p` to print only matched lines) |
 | `-e` | Add multiple `sed` expressions in one command |
 | `g` (suffix on `s///`) | Replace every match on the line, not just the first |
@@ -51,7 +51,7 @@ sed '/pattern/d'         # delete lines matching pattern
 
 ## How It Works
 
-`sed` compiles your command(s) into an internal instruction set, then for every input line: loads it into a working buffer, applies the matching instructions, and prints the result (unless `-n` suppresses that). Because it processes one line at a time without loading the whole file into memory, `sed` can transform files far larger than available RAM. `-i` works by writing to a temporary file and replacing the original once processing finishes — which is why an interrupted `sed -i` can occasionally leave a `.bak` file or a truncated result depending on the implementation.
+`sed` compiles your command(s) into an internal instruction set, then for every input line: loads it into a working buffer, applies the matching instructions, and prints the result (unless `-n` suppresses that). Because it processes one line at a time without loading the whole file into memory, `sed` can transform files far larger than available RAM. `-i` works by writing to a temporary file and replacing the original once processing finishes, which is why an interrupted `sed -i` can occasionally leave a `.bak` file or a truncated result depending on the implementation.
 
 ## Real-World Examples
 
@@ -79,15 +79,15 @@ Filter to matching lines using `sed` instead of `grep` (both can do this; `sed` 
 
 ## Common Mistakes
 
-* Running `sed -i` without a backup on an important file and getting the substitution wrong — test with `sed 's/.../.../ ' file` (no `-i`) first to preview the output before editing in place.
+* Running `sed -i` without a backup on an important file and getting the substitution wrong: test with `sed 's/.../.../ ' file` (no `-i`) first to preview the output before editing in place.
 * Forgetting the `g` flag and being confused why only the *first* match per line was replaced.
-* Using `/` as the delimiter when the pattern itself contains `/` (e.g. file paths) — `sed` lets you pick a different delimiter, like `sed 's|/old/path|/new/path|'`, to avoid escaping every slash.
+* Using `/` as the delimiter when the pattern itself contains `/` (e.g. file paths): `sed` lets you pick a different delimiter, like `sed 's|/old/path|/new/path|'`, to avoid escaping every slash.
 
 ## Related Commands
 
-* `awk` — more powerful field-based processing, when `sed` alone isn't enough
-* `tr` — simpler character-level translation
-* `grep` — pattern matching without the substitution/editing capability
+* `awk`: more powerful field-based processing, when `sed` alone isn't enough
+* `tr`: simpler character-level translation
+* `grep`: pattern matching without the substitution/editing capability
 
 ## Practice
 

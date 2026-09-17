@@ -8,7 +8,7 @@ Transform characters (`tr`) or extract columns/fields (`cut`) from text.
 
 ## Mental Model
 
-`tr` operates on individual characters — translating, deleting, or squeezing them. `cut` operates on structure — pulling out specific columns or byte ranges from each line. Neither understands "words" or context the way `awk` or `sed` do; they're both intentionally simple, single-purpose tools.
+`tr` operates on individual characters, translating, deleting, or squeezing them. `cut` operates on structure, pulling out specific columns or byte ranges from each line. Neither understands "words" or context the way `awk` or `sed` do; they're both intentionally simple, single-purpose tools.
 
 ## Syntax
 
@@ -59,7 +59,7 @@ age
 
 ## How It Works
 
-Both tools stream input line by line without buffering the whole file. `tr` maps each input character through a translation table built from the sets you give it — this is why it can only work on single characters, not multi-character patterns (that's `sed`'s job). `cut` splits each line on the delimiter and picks out the requested field indexes — it has no concept of quoted fields or escaping, which is why `cut` breaks on CSVs where a field itself contains the delimiter (a real CSV parser or `awk` handles that correctly).
+Both tools stream input line by line without buffering the whole file. `tr` maps each input character through a translation table built from the sets you give it, which is why it can only work on single characters, not multi-character patterns (that's `sed`'s job). `cut` splits each line on the delimiter and picks out the requested field indexes; it has no concept of quoted fields or escaping, which is why `cut` breaks on CSVs where a field itself contains the delimiter (a real CSV parser or `awk` handles that correctly).
 
 ## Real-World Examples
 
@@ -83,19 +83,19 @@ cut -d':' -f1 /etc/passwd
 cat access.log | cut -d' ' -f1 | sort | uniq -c | sort -rn
 ```
 
-Extract the first field (often an IP address in web server logs), then build a frequency count of it — a very common log-analysis pattern.
+Extract the first field (often an IP address in web server logs), then build a frequency count of it: a very common log-analysis pattern.
 
 ## Common Mistakes
 
-* Using `cut` on a CSV where fields can contain quoted commas — `cut -d','` blindly splits on every comma, breaking on `"Smith, John",30`. Use a real CSV-aware tool for anything beyond the simplest cases.
-* Expecting `tr` to match multi-character strings — `tr 'ab' 'xy'` maps `a`→`x` and `b`→`y` independently, it does not replace the two-character sequence `"ab"`.
-* Forgetting `cut`'s default delimiter is tab, not space — a common surprise when running `cut -f2` on space-separated text without specifying `-d' '`.
+* Using `cut` on a CSV where fields can contain quoted commas. `cut -d','` blindly splits on every comma, breaking on `"Smith, John",30`. Use a real CSV-aware tool for anything beyond the simplest cases.
+* Expecting `tr` to match multi-character strings: `tr 'ab' 'xy'` maps `a`→`x` and `b`→`y` independently, it does not replace the two-character sequence `"ab"`.
+* Forgetting `cut`'s default delimiter is tab, not space. A common surprise when running `cut -f2` on space-separated text without specifying `-d' '`.
 
 ## Related Commands
 
-* `sed` — pattern-based text substitution, handles multi-character replacements
-* `awk` — full field-based text processing with programmable logic
-* `column` — format columnar text for readability
+* `sed`: pattern-based text substitution, handles multi-character replacements
+* `awk`: full field-based text processing with programmable logic
+* `column`: format columnar text for readability
 
 ## Practice
 

@@ -8,7 +8,7 @@ Show who you're logged in as, and what permissions that identity carries.
 
 ## Mental Model
 
-Every process runs as some user, with a set of group memberships attached. `whoami` answers "who am I," `id` answers "who am I, in full detail" — user ID, group ID, and every group you belong to.
+Every process runs as some user, with a set of group memberships attached. `whoami` answers "who am I," `id` answers "who am I, in full detail": user ID, group ID, and every group you belong to.
 
 ## Syntax
 
@@ -50,7 +50,7 @@ uid=1000(alice) gid=1000(alice) groups=1000(alice),27(sudo),999(docker)
 
 ## How It Works
 
-Every process has a numeric user ID (UID) and group IDs (GID) attached by the kernel — these, not usernames, are what the kernel actually checks for permission decisions. `whoami` and `id` both look up your process's UID/GIDs and translate them to human-readable names via `/etc/passwd` and `/etc/group`. Being in a group like `docker` or `sudo` is what actually grants access to those resources — the name itself means nothing to the kernel, only the numeric ID does.
+Every process has a numeric user ID (UID) and group IDs (GID) attached by the kernel. These, not usernames, are what the kernel actually checks for permission decisions. `whoami` and `id` both look up your process's UID/GIDs and translate them to human-readable names via `/etc/passwd` and `/etc/group`. Being in a group like `docker` or `sudo` is what actually grants access to those resources: the name itself means nothing to the kernel, only the numeric ID does.
 
 ## Real-World Examples
 
@@ -75,15 +75,15 @@ Common in scripts that need to warn or refuse to run under specific accounts.
 
 ## Common Mistakes
 
-* Assuming a username in `/etc/passwd` guarantees you're actually operating as that user in the current shell — always check with `whoami`/`id`, especially after `su` or inside containers.
-* Editing `/etc/group` to add yourself to a group and expecting it to apply immediately — group membership changes usually require starting a new login session (or running `newgrp`) to take effect in `id`'s output.
-* Confusing UID 0 with "the user named root" — any account with UID 0 has root privileges, regardless of its username.
+* Assuming a username in `/etc/passwd` guarantees you're actually operating as that user in the current shell. Always check with `whoami`/`id`, especially after `su` or inside containers.
+* Editing `/etc/group` to add yourself to a group and expecting it to apply immediately. Group membership changes usually require starting a new login session (or running `newgrp`) to take effect in `id`'s output.
+* Confusing UID 0 with "the user named root": any account with UID 0 has root privileges, regardless of its username.
 
 ## Related Commands
 
-* `su` / `sudo` — switch to another user's identity
-* `groups` — a shorter way to see just group memberships
-* `who` / `w` — see all users currently logged into the system
+* `su` / `sudo`: switch to another user's identity
+* `groups`: a shorter way to see just group memberships
+* `who` / `w`: see all users currently logged into the system
 
 ## Practice
 

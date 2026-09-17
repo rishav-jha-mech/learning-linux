@@ -8,7 +8,7 @@ A low-overhead profiler for understanding exactly where a program (or the whole 
 
 ## Mental Model
 
-Where `strace` shows every syscall (with real overhead), `perf` takes statistical samples of what the CPU is executing — periodically interrupting to record the current instruction/function, then building a picture of where time is actually going. This sampling approach is what makes it practical to profile real, performance-sensitive workloads without slowing them down significantly.
+Where `strace` shows every syscall (with real overhead), `perf` takes statistical samples of what the CPU is executing, periodically interrupting to record the current instruction/function, then building a picture of where time is actually going. This sampling approach is what makes it practical to profile real, performance-sensitive workloads without slowing them down significantly.
 
 ## Syntax
 
@@ -50,7 +50,7 @@ Output (abridged):
 
 ## How It Works
 
-`perf` is built on the Linux kernel's performance monitoring subsystem, which can read hardware performance counters directly from the CPU (cycles, cache misses, branch mispredictions) and set up sampling interrupts at a configurable frequency. Instead of tracking every single event (which would be `strace`-level overhead), `perf record` samples "what's executing right now" at intervals, and statistically that sample distribution converges on an accurate picture of where time is spent — with far less slowdown than exhaustive tracing.
+`perf` is built on the Linux kernel's performance monitoring subsystem, which can read hardware performance counters directly from the CPU (cycles, cache misses, branch mispredictions) and set up sampling interrupts at a configurable frequency. Instead of tracking every single event (which would be `strace`-level overhead), `perf record` samples "what's executing right now" at intervals, and statistically that sample distribution converges on an accurate picture of where time is spent, with far less slowdown than exhaustive tracing.
 
 ## Real-World Examples
 
@@ -76,15 +76,15 @@ Profile an already-running process for 10 seconds without restarting it, then in
 
 ## Common Mistakes
 
-* Reaching for `strace` to diagnose "why is this slow" — `strace`'s own overhead can distort timing-sensitive performance issues; `perf` is the right tool once you already know it's slow and need to find out where.
-* Running `perf record`/`perf top` without sufficient permissions — many systems restrict access to performance counters by default (`perf_event_paranoid` setting), requiring `sudo` or a sysctl change.
-* Looking only at `perf report`'s top-level summary and missing the call graph (`-g`) — without it, you see which functions are hot but not *why* they're being called so often.
+* Reaching for `strace` to diagnose "why is this slow": `strace`'s own overhead can distort timing-sensitive performance issues; `perf` is the right tool once you already know it's slow and need to find out where.
+* Running `perf record`/`perf top` without sufficient permissions: many systems restrict access to performance counters by default (`perf_event_paranoid` setting), requiring `sudo` or a sysctl change.
+* Looking only at `perf report`'s top-level summary and missing the call graph (`-g`): without it, you see which functions are hot but not *why* they're being called so often.
 
 ## Related Commands
 
-* `strace` — syscall-level tracing, different layer and higher overhead
-* `top` / `vmstat` — coarser, always-on system monitoring without deep profiling
-* `flamegraph` tools — visualize `perf record` output as an intuitive flame graph
+* `strace`: syscall-level tracing, different layer and higher overhead
+* `top` / `vmstat`: coarser, always-on system monitoring without deep profiling
+* `flamegraph` tools: visualize `perf record` output as an intuitive flame graph
 
 ## Practice
 

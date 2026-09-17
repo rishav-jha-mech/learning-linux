@@ -8,7 +8,7 @@ Counts lines, words, and bytes in text.
 
 ## Mental Model
 
-`wc` ("word count") just tallies things — by default it prints three numbers: lines, words, and bytes. You almost always narrow it down to just the one number you care about.
+`wc` ("word count") just tallies things: by default it prints three numbers: lines, words, and bytes. You almost always narrow it down to just the one number you care about.
 
 ## Syntax
 
@@ -41,7 +41,7 @@ That's 42 lines, 310 words, 2048 bytes.
 
 ## How It Works
 
-`wc` streams through the input counting newline characters (for lines), whitespace-separated tokens (for words), and raw bytes — it doesn't need to hold the whole file in memory, so it works efficiently even on very large files or continuous piped input.
+`wc` streams through the input counting newline characters (for lines), whitespace-separated tokens (for words), and raw bytes. It doesn't need to hold the whole file in memory, so it works efficiently even on very large files or continuous piped input.
 
 ## Real-World Examples
 
@@ -74,14 +74,14 @@ Count total words across multiple files combined.
 ## Common Mistakes
 
 * Using `cat file | wc -l` when `wc -l file` does the same thing more directly.
-* Forgetting `ls | wc -l` counts lines of output, which can be off if filenames contain newlines (rare, but possible) — `find . -maxdepth 1 | wc -l` or similar is more robust for scripting.
-* Expecting `-c` and `-m` to always agree — they diverge on files with multi-byte (e.g. UTF-8) characters, since `-c` counts bytes and `-m` counts characters.
+* Forgetting `ls | wc -l` counts lines of output, which can be off if filenames contain newlines (rare, but possible). `find . -maxdepth 1 | wc -l` or similar is more robust for scripting.
+* Expecting `-c` and `-m` to always agree: they diverge on files with multi-byte (e.g. UTF-8) characters, since `-c` counts bytes and `-m` counts characters.
 
 ## Related Commands
 
-* `grep -c` — count matching lines directly, no piping into `wc` needed
-* `du` — count disk usage, a different kind of "size"
-* `find` — often piped into `wc -l` to count matching files
+* `grep -c`: count matching lines directly, no piping into `wc` needed
+* `du`: count disk usage, a different kind of "size"
+* `find`: often piped into `wc -l` to count matching files
 
 ## Practice
 

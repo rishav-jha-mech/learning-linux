@@ -49,7 +49,7 @@ The trailing `&` starts the command in the background immediately; `jobs` lists 
 
 ## How It Works
 
-Job control is a shell feature layered on top of process groups and signals — `Ctrl+Z` sends `SIGTSTP` to pause a process, `bg`/`fg` just change whether the shell waits on it and whether it's connected to the terminal. Normally, when your shell exits, it sends `SIGHUP` to its background jobs, which by default terminates them too. `nohup` makes a process ignore `SIGHUP` from the start; `disown` removes a job from the shell's job table so the shell no longer tracks or signals it when exiting — the process itself is unaffected, only the shell's bookkeeping changes.
+Job control is a shell feature layered on top of process groups and signals: `Ctrl+Z` sends `SIGTSTP` to pause a process, `bg`/`fg` just change whether the shell waits on it and whether it's connected to the terminal. Normally, when your shell exits, it sends `SIGHUP` to its background jobs, which by default terminates them too. `nohup` makes a process ignore `SIGHUP` from the start; `disown` removes a job from the shell's job table so the shell no longer tracks or signals it when exiting. The process itself is unaffected, only the shell's bookkeeping changes.
 
 ## Real-World Examples
 
@@ -77,15 +77,15 @@ Run a script fully detached from the terminal, redirecting both stdout and stder
 
 ## Common Mistakes
 
-* Closing a terminal with a background job running and expecting it to keep going — without `nohup` or `disown`, it typically receives `SIGHUP` and dies with the shell.
-* Forgetting `&` starts a job *immediately* in the background — some people accidentally leave off the `&` and get stuck waiting on a foreground job they meant to background.
-* Not redirecting output with `nohup` — without redirection, output still tries to write to a terminal that may no longer exist, which can cause issues; `nohup command > log 2>&1 &` is the safe, complete pattern.
+* Closing a terminal with a background job running and expecting it to keep going: without `nohup` or `disown`, it typically receives `SIGHUP` and dies with the shell.
+* Forgetting `&` starts a job *immediately* in the background: some people accidentally leave off the `&` and get stuck waiting on a foreground job they meant to background.
+* Not redirecting output with `nohup`: without redirection, output still tries to write to a terminal that may no longer exist, which can cause issues; `nohup command > log 2>&1 &` is the safe, complete pattern.
 
 ## Related Commands
 
-* `screen` / `tmux` — full terminal multiplexers, a more robust alternative to job control for long sessions
-* `systemd` (as a service) — the proper way to run something persistently in production, rather than relying on shell job control
-* `ps` — see the actual OS-level process behind a shell job
+* `screen` / `tmux`: full terminal multiplexers, a more robust alternative to job control for long sessions
+* `systemd` (as a service): the proper way to run something persistently in production, rather than relying on shell job control
+* `ps`: see the actual OS-level process behind a shell job
 
 ## Practice
 

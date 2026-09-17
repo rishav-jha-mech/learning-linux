@@ -8,7 +8,7 @@ Shows the full path of the executable that would run for a given command name.
 
 ## Mental Model
 
-When you type a command like `python`, the shell doesn't magically know where it lives — it searches a list of directories (`$PATH`) in order and runs the first match it finds. `which` shows you exactly which file that search would pick.
+When you type a command like `python`, the shell doesn't magically know where it lives. It searches a list of directories (`$PATH`) in order and runs the first match it finds. `which` shows you exactly which file that search would pick.
 
 ## Syntax
 
@@ -36,7 +36,7 @@ Output:
 
 ## How It Works
 
-`which` reads `$PATH`, splits it on `:`, and checks each directory in order for an executable file matching the name — stopping at the first hit, which is exactly the same lookup the shell itself performs when you run a command. `which -a` continues checking every directory instead of stopping, useful when multiple versions of a tool are installed and you're not sure which one actually runs.
+`which` reads `$PATH`, splits it on `:`, and checks each directory in order for an executable file matching the name, stopping at the first hit, which is exactly the same lookup the shell itself performs when you run a command. `which -a` continues checking every directory instead of stopping, useful when multiple versions of a tool are installed and you're not sure which one actually runs.
 
 ## Real-World Examples
 
@@ -57,19 +57,19 @@ which -a node
 $(which python3) --version
 ```
 
-Run whatever `which` resolves to directly — rarely necessary, but shows how `which`'s output is just a path.
+Run whatever `which` resolves to directly. Rarely necessary, but shows how `which`'s output is just a path.
 
 ## Common Mistakes
 
-* Confusing `which` with `whereis` — `which` only searches `$PATH` for executables; `whereis` also looks for man pages and source, and searches a different, more limited set of locations.
-* Not realizing shell builtins (like `cd`) and aliases don't show up correctly with `which` on some shells — `type command` is more reliable for those cases.
-* Assuming the first result in `$PATH` is always the one you want — if you have multiple installs (e.g. via a version manager), order in `$PATH` determines which one wins, and it can surprise you.
+* Confusing `which` with `whereis`: `which` only searches `$PATH` for executables; `whereis` also looks for man pages and source, and searches a different, more limited set of locations.
+* Not realizing shell builtins (like `cd`) and aliases don't show up correctly with `which` on some shells. `type command` is more reliable for those cases.
+* Assuming the first result in `$PATH` is always the one you want. If you have multiple installs (e.g. via a version manager), order in `$PATH` determines which one wins, and it can surprise you.
 
 ## Related Commands
 
-* `type` — shows whether a name is an alias, builtin, function, or executable (more shell-aware than `which`)
-* `whereis` — locate binaries, source, and man pages together
-* `command -v` — POSIX-portable alternative to `which`
+* `type`: shows whether a name is an alias, builtin, function, or executable (more shell-aware than `which`)
+* `whereis`: locate binaries, source, and man pages together
+* `command -v`: POSIX-portable alternative to `which`
 
 ## Practice
 

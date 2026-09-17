@@ -4,11 +4,11 @@ sidebar_position: 23
 
 # Permissions
 
-The full model behind who can read, write, and execute a file — beyond just the `chmod`/`chown` commands.
+The full model behind who can read, write, and execute a file: beyond just the `chmod`/`chown` commands.
 
 ## Mental Model
 
-Every file has an owner, a group, and three permission sets (owner/group/others), each controlling read, write, and execute. But "permissions" as a concept is bigger than the numbers `chmod` sets — it also covers *how* the kernel checks them, and a few special bits that change normal behavior.
+Every file has an owner, a group, and three permission sets (owner/group/others), each controlling read, write, and execute. But "permissions" as a concept is bigger than the numbers `chmod` sets: it also covers *how* the kernel checks them, and a few special bits that change normal behavior.
 
 ## The Three Sets, Three Permissions
 
@@ -19,7 +19,7 @@ Every file has an owner, a group, and three permission sets (owner/group/others)
  └──────── owner:  rwx
 ```
 
-Read, write, execute — for a directory, these mean something slightly different than for a file:
+Read, write, execute: for a directory, these mean something slightly different than for a file:
 
 | Permission | On a file | On a directory |
 | --- | --- | --- |
@@ -38,12 +38,12 @@ Read, write, execute — for a directory, these mean something slightly differen
 ```bash
 chmod u+s program      # setuid
 chmod g+s directory    # setgid
-chmod +t /tmp          # sticky bit — this is why /tmp is safe to share between users
+chmod +t /tmp          # sticky bit: this is why /tmp is safe to share between users
 ```
 
 ## How It Works
 
-Every process runs with an effective UID and GID, and the kernel checks permission bits against those on every file access — not against the username, which is purely a display convenience. `setuid` is what lets ordinary users run `passwd` (which needs to write to a root-owned file) without being root themselves: the binary temporarily runs as its owner (root) for the duration of that specific program. The sticky bit exists specifically to solve `/tmp`'s problem — a world-writable directory where anyone can create files, but nobody except the owner should be able to delete someone else's.
+Every process runs with an effective UID and GID, and the kernel checks permission bits against those on every file access, not against the username, which is purely a display convenience. `setuid` is what lets ordinary users run `passwd` (which needs to write to a root-owned file) without being root themselves: the binary temporarily runs as its owner (root) for the duration of that specific program. The sticky bit exists specifically to solve `/tmp`'s problem: a world-writable directory where anyone can create files, but nobody except the owner should be able to delete someone else's.
 
 ## Real-World Examples
 
@@ -62,19 +62,19 @@ ls -ld /tmp
 find / -perm -4000 -type f 2>/dev/null
 ```
 
-Find every setuid binary on the system — a common security audit step, since setuid programs are a classic target for privilege escalation if they're buggy.
+Find every setuid binary on the system: a common security audit step, since setuid programs are a classic target for privilege escalation if they're buggy.
 
 ## Common Mistakes
 
-* Setting `chmod 777` to "just make it work" — this doesn't just grant broad access, it also strips away the meaningful distinction between owner/group/others that permissions exist to provide.
-* Not realizing execute permission on a *directory* is required just to access files inside it by name, even with read permission — `ls` might fail without directory execute permission, independent of file-level permissions.
+* Setting `chmod 777` to "just make it work": this doesn't just grant broad access, it also strips away the meaningful distinction between owner/group/others that permissions exist to provide.
+* Not realizing execute permission on a *directory* is required just to access files inside it by name, even with read permission: `ls` might fail without directory execute permission, independent of file-level permissions.
 * Forgetting the sticky bit exists and being confused why `/tmp` allows everyone to create files but not delete each other's.
 
 ## Related Commands
 
-* [chmod](/docs/basic/chmod) — set standard and special permission bits
-* [chown](/docs/basic/chown) — set ownership, which permissions are checked against
-* [getfacl and setfacl](/docs/advanced/getfacl-and-setfacl) — permissions beyond the basic owner/group/other model
+* [chmod](/docs/basic/chmod): set standard and special permission bits
+* [chown](/docs/basic/chown): set ownership, which permissions are checked against
+* [getfacl and setfacl](/docs/advanced/getfacl-and-setfacl): permissions beyond the basic owner/group/other model
 
 ## Practice
 

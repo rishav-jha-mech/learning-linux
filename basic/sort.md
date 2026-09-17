@@ -8,7 +8,7 @@ Sorts lines of text.
 
 ## Mental Model
 
-`sort` reads all its input lines, orders them according to a comparison rule (alphabetical by default), and prints the result. It doesn't sort in place — it always produces new output.
+`sort` reads all its input lines, orders them according to a comparison rule (alphabetical by default), and prints the result. It doesn't sort in place: it always produces new output.
 
 ## Syntax
 
@@ -36,7 +36,7 @@ Prints the lines of `names.txt` in alphabetical order.
 
 ## How It Works
 
-By default, `sort` compares lines byte by byte as strings — which is why `sort` on numbers like `2`, `10`, `100` without `-n` gives `10`, `100`, `2` (lexical order, not numeric order). `-n` tells it to interpret each line as a number before comparing. For large inputs that don't fit comfortably in memory, `sort` transparently splits the data into chunks, sorts each on disk, and merges them — you don't need to think about this, but it's why `sort` scales to files larger than RAM.
+By default, `sort` compares lines byte by byte as strings, which is why `sort` on numbers like `2`, `10`, `100` without `-n` gives `10`, `100`, `2` (lexical order, not numeric order). `-n` tells it to interpret each line as a number before comparing. For large inputs that don't fit comfortably in memory, `sort` transparently splits the data into chunks, sorts each on disk, and merges them. You don't need to think about this, but it's why `sort` scales to files larger than RAM.
 
 ## Real-World Examples
 
@@ -60,19 +60,19 @@ sort -u names.txt
 cat access.log | awk '{print $1}' | sort | uniq -c | sort -rn
 ```
 
-A classic pipeline: extract a field, sort it so identical values are adjacent, count occurrences with `uniq -c`, then sort the counts descending — this is the standard way to build a frequency table from log data.
+A classic pipeline: extract a field, sort it so identical values are adjacent, count occurrences with `uniq -c`, then sort the counts descending. This is the standard way to build a frequency table from log data.
 
 ## Common Mistakes
 
 * Sorting numbers without `-n` and being confused why `9` comes after `10`.
-* Assuming `sort` modifies the input file — it only prints sorted output; redirect it (`sort file > sorted.txt`) or use `sort -o file file` to write back to the same file.
-* Forgetting `uniq` only removes duplicates from *adjacent* lines — you almost always need `sort` before `uniq` for it to work as expected.
+* Assuming `sort` modifies the input file: it only prints sorted output; redirect it (`sort file > sorted.txt`) or use `sort -o file file` to write back to the same file.
+* Forgetting `uniq` only removes duplicates from *adjacent* lines: you almost always need `sort` before `uniq` for it to work as expected.
 
 ## Related Commands
 
-* `uniq` — remove or count duplicate adjacent lines, usually paired with `sort`
-* `awk` — extract specific fields before sorting
-* `comm` — compare two sorted files line by line
+* `uniq`: remove or count duplicate adjacent lines, usually paired with `sort`
+* `awk`: extract specific fields before sorting
+* `comm`: compare two sorted files line by line
 
 ## Practice
 

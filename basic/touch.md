@@ -8,7 +8,7 @@ Creates an empty file if it doesn't exist, or updates a file's timestamp if it d
 
 ## Mental Model
 
-`touch` doesn't really care about content — its main job is timestamps. Creating a new empty file is really a side effect of "update the modified time of a file that isn't there yet."
+`touch` doesn't really care about content: its main job is timestamps. Creating a new empty file is really a side effect of "update the modified time of a file that isn't there yet."
 
 ## Syntax
 
@@ -64,14 +64,14 @@ Create the file, then immediately confirm it exists with its metadata.
 
 ## Common Mistakes
 
-* Assuming `touch` "resets" a file's contents — it never truncates or modifies content, only timestamps (and creates the file if missing).
-* Using `touch` when you meant `>` — `touch file` leaves existing content alone, `> file` truncates it to zero bytes.
+* Assuming `touch` "resets" a file's contents: it never truncates or modifies content, only timestamps (and creates the file if missing).
+* Using `touch` when you meant `>`: `touch file` leaves existing content alone, `> file` truncates it to zero bytes.
 
 ## Related Commands
 
-* `stat` — inspect a file's timestamps and metadata
-* `mkdir` — create a directory
-* `rm` — remove a file
+* `stat`: inspect a file's timestamps and metadata
+* `mkdir`: create a directory
+* `rm`: remove a file
 
 ## Practice
 

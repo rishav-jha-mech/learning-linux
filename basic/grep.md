@@ -8,7 +8,7 @@ Searches text for lines matching a pattern.
 
 ## Mental Model
 
-`grep` reads input line by line and prints only the lines that match a pattern. That pattern can be a plain string or a regular expression — "global regular expression print" is where the name comes from.
+`grep` reads input line by line and prints only the lines that match a pattern. That pattern can be a plain string or a regular expression: "global regular expression print" is where the name comes from.
 
 ## Syntax
 
@@ -29,7 +29,7 @@ Prints every line in `app.log` containing "error".
 | Option | Meaning |
 | --- | --- |
 | `-i` | Case-insensitive matching |
-| `-v` | Invert match — show lines that do NOT match |
+| `-v` | Invert match: show lines that do NOT match |
 | `-r` | Search recursively through a directory |
 | `-n` | Show line numbers |
 | `-c` | Count matching lines instead of printing them |
@@ -62,7 +62,7 @@ grep -v "debug" app.log
 ps aux | grep nginx
 ```
 
-List running processes, then filter to the ones mentioning `nginx` — one of the most common `grep` uses in practice.
+List running processes, then filter to the ones mentioning `nginx`: one of the most common `grep` uses in practice.
 
 ```bash
 grep -r "TODO" src/ | wc -l
@@ -72,16 +72,16 @@ Count how many TODO comments exist across a codebase.
 
 ## Common Mistakes
 
-* Forgetting that unescaped regex characters (`.`, `*`, `[`, `(`) have special meaning — searching for a literal `.` requires escaping it (`\.`) or using `-F` for a fixed string.
-* Using `ps aux | grep nginx` and seeing the `grep` process itself show up in the results (it matches its own command line) — add `[n]ginx` or `grep -v grep` to filter that out if it matters.
+* Forgetting that unescaped regex characters (`.`, `*`, `[`, `(`) have special meaning: searching for a literal `.` requires escaping it (`\.`) or using `-F` for a fixed string.
+* Using `ps aux | grep nginx` and seeing the `grep` process itself show up in the results (it matches its own command line). Add `[n]ginx` or `grep -v grep` to filter that out if it matters.
 * Not knowing `-r` exists and manually running `grep` file by file.
 
 ## Related Commands
 
-* `egrep` — equivalent to `grep -E`
-* `awk` — extract and transform matched fields, not just print whole lines
-* `find` — locate files by name/metadata rather than by content
-* `ripgrep` (`rg`) — a much faster modern alternative to `grep -r`
+* `egrep`: equivalent to `grep -E`
+* `awk`: extract and transform matched fields, not just print whole lines
+* `find`: locate files by name/metadata rather than by content
+* `ripgrep` (`rg`): a much faster modern alternative to `grep -r`
 
 ## Practice
 

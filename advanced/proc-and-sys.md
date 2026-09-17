@@ -8,7 +8,7 @@ Virtual filesystems that expose live kernel and process information as ordinary 
 
 ## Mental Model
 
-Nothing under `/proc` or `/sys` lives on disk — these are views the kernel generates on demand when you read them, backed by whatever the kernel currently knows, not stored data. Reading a file under `/proc` is really asking the kernel a question and getting the answer formatted as text.
+Nothing under `/proc` or `/sys` lives on disk. These are views the kernel generates on demand when you read them, backed by whatever the kernel currently knows, not stored data. Reading a file under `/proc` is really asking the kernel a question and getting the answer formatted as text.
 
 ## /proc
 
@@ -35,7 +35,7 @@ cmdline   environ   fd/   status   maps   cwd   exe
 
 ## /sys
 
-Organized around kernel objects — devices, drivers, and kernel subsystems — and, importantly, often *writable*: writing to certain files under `/sys` changes live kernel behavior immediately.
+Organized around kernel objects (devices, drivers, and kernel subsystems) and, importantly, often *writable*: writing to certain files under `/sys` changes live kernel behavior immediately.
 
 ```bash
 cat /sys/class/net/eth0/operstate
@@ -49,7 +49,7 @@ up
 
 ## How It Works
 
-`/proc` and `/sys` are not stored on any physical disk — they're special filesystem types (`procfs` and `sysfs`) where every "file" is backed by a kernel function that generates its content the moment you read it. This is exactly what tools like [ps and top](/docs/intermediate/ps-and-top), [free, uptime, and dmesg](/docs/advanced/free-uptime-dmesg), and [lsof and fuser](/docs/advanced/lsof-and-fuser) are built on — they aren't using some special kernel API, they're just reading and formatting these same files. `/sys` in particular is also how many hardware and kernel tuning knobs (like [sysctl parameters](/docs/advanced/ulimit-and-sysctl)) are actually exposed, sometimes directly, sometimes through the `sysctl` command as a friendlier interface to the same underlying files.
+`/proc` and `/sys` are not stored on any physical disk. They're special filesystem types (`procfs` and `sysfs`) where every "file" is backed by a kernel function that generates its content the moment you read it. This is exactly what tools like [ps and top](/docs/intermediate/ps-and-top), [free, uptime, and dmesg](/docs/advanced/free-uptime-dmesg), and [lsof and fuser](/docs/advanced/lsof-and-fuser) are built on: they aren't using some special kernel API, they're just reading and formatting these same files. `/sys` in particular is also how many hardware and kernel tuning knobs (like [sysctl parameters](/docs/advanced/ulimit-and-sysctl)) are actually exposed, sometimes directly, sometimes through the `sysctl` command as a friendlier interface to the same underlying files.
 
 ## Real-World Examples
 
@@ -73,19 +73,19 @@ cat /proc/1234/environ | tr '\0' '\n'
 ls -l /proc/1234/fd/
 ```
 
-List every open file descriptor for a specific process as symlinks — the raw data `lsof -p` presents in friendlier form.
+List every open file descriptor for a specific process as symlinks: the raw data `lsof -p` presents in friendlier form.
 
 ## Common Mistakes
 
-* Treating `/proc`/`/sys` files as regular files you can safely `cp` or back up — their content is dynamically generated and often meaningless outside the moment you read it (and some, like `/proc/kcore`, represent enormous virtual sizes that aren't real disk usage at all).
-* Writing to a file under `/sys` without understanding it changes live kernel behavior immediately, sometimes irreversibly for that boot — this isn't like editing a config file that needs a restart to apply.
-* Parsing `/proc/PID/cmdline` without accounting for its null-byte-separated format — arguments are separated by `\0`, not spaces, which is why naive parsing produces one run-on string unless you convert the separators first.
+* Treating `/proc`/`/sys` files as regular files you can safely `cp` or back up: their content is dynamically generated and often meaningless outside the moment you read it (and some, like `/proc/kcore`, represent enormous virtual sizes that aren't real disk usage at all).
+* Writing to a file under `/sys` without understanding it changes live kernel behavior immediately, sometimes irreversibly for that boot. This isn't like editing a config file that needs a restart to apply.
+* Parsing `/proc/PID/cmdline` without accounting for its null-byte-separated format: arguments are separated by `\0`, not spaces, which is why naive parsing produces one run-on string unless you convert the separators first.
 
 ## Related Commands
 
-* [ps and top](/docs/intermediate/ps-and-top) — user-friendly tools built entirely on `/proc` data
-* [ulimit and sysctl](/docs/advanced/ulimit-and-sysctl) — `sysctl` is a friendlier interface over related kernel-tunable files
-* [lsof and fuser](/docs/advanced/lsof-and-fuser) — present `/proc/PID/fd/` data in a more readable form
+* [ps and top](/docs/intermediate/ps-and-top): user-friendly tools built entirely on `/proc` data
+* [ulimit and sysctl](/docs/advanced/ulimit-and-sysctl): `sysctl` is a friendlier interface over related kernel-tunable files
+* [lsof and fuser](/docs/advanced/lsof-and-fuser): present `/proc/PID/fd/` data in a more readable form
 
 ## Practice
 

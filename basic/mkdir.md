@@ -8,7 +8,7 @@ Creates a new directory.
 
 ## Mental Model
 
-`mkdir` asks the filesystem to create a new directory entry. By default it only creates one level at a time — the parent directory must already exist.
+`mkdir` asks the filesystem to create a new directory entry. By default it only creates one level at a time: the parent directory must already exist.
 
 ## Syntax
 
@@ -41,7 +41,7 @@ project
 
 ## How It Works
 
-`mkdir` calls the `mkdir()` system call, which creates a new inode of type "directory" and adds an entry for it in the parent directory. Every new directory starts with two automatic entries: `.` (itself) and `..` (its parent) — those aren't a `mkdir` convention, they're created by the kernel as part of directory creation.
+`mkdir` calls the `mkdir()` system call, which creates a new inode of type "directory" and adds an entry for it in the parent directory. Every new directory starts with two automatic entries: `.` (itself) and `..` (its parent). Those aren't a `mkdir` convention, they're created by the kernel as part of directory creation.
 
 ## Real-World Examples
 
@@ -59,19 +59,19 @@ mkdir src tests docs
 mkdir -p build && cd build
 ```
 
-Create a directory and immediately move into it — common at the start of a build or scratch session.
+Create a directory and immediately move into it: common at the start of a build or scratch session.
 
 ## Common Mistakes
 
-* Running `mkdir a/b/c` without `-p` when `a` and `b` don't exist yet — it fails with "No such file or directory" instead of creating the whole chain.
-* Assuming `mkdir` fails silently if the directory exists — without `-p` it errors out; with `-p` it succeeds silently, which can hide typos in scripts.
+* Running `mkdir a/b/c` without `-p` when `a` and `b` don't exist yet: it fails with "No such file or directory" instead of creating the whole chain.
+* Assuming `mkdir` fails silently if the directory exists: without `-p` it errors out; with `-p` it succeeds silently, which can hide typos in scripts.
 
 ## Related Commands
 
-* `rmdir` — remove an empty directory
-* `rm -r` — remove a directory and its contents
-* `touch` — create an empty file
-* `ls` — confirm the directory was created
+* `rmdir`: remove an empty directory
+* `rm -r`: remove a directory and its contents
+* `touch`: create an empty file
+* `ls`: confirm the directory was created
 
 ## Practice
 

@@ -4,7 +4,7 @@ sidebar_position: 10
 
 # awk
 
-A field-based text processing language — splits each line into fields and lets you act on them.
+A field-based text processing language: splits each line into fields and lets you act on them.
 
 ## Mental Model
 
@@ -42,7 +42,7 @@ alice
 
 ## How It Works
 
-`awk` reads input one line at a time, splits it into fields using the field separator (whitespace by default), and evaluates your pattern/action pairs against it — much like `sed`, but with a proper expression language instead of just substitution. This is why `awk` can do arithmetic, maintain running totals across lines, and format output, while `sed`/`grep` are limited to matching and simple text substitution.
+`awk` reads input one line at a time, splits it into fields using the field separator (whitespace by default), and evaluates your pattern/action pairs against it, much like `sed`, but with a proper expression language instead of just substitution. This is why `awk` can do arithmetic, maintain running totals across lines, and format output, while `sed`/`grep` are limited to matching and simple text substitution.
 
 ## Real-World Examples
 
@@ -69,19 +69,19 @@ awk '{print NR, $0}' file.txt
 cat access.log | awk '{print $1}' | sort | uniq -c | sort -rn | head
 ```
 
-Extract the first field (often an IP), count occurrences, and rank them — the classic "top talkers" analysis on a web server log.
+Extract the first field (often an IP), count occurrences, and rank them: the classic "top talkers" analysis on a web server log.
 
 ## Common Mistakes
 
-* Using `awk` for something `cut` already does more simply — if you're just extracting one fixed field with a simple delimiter, `cut` is more obvious; reach for `awk` once you need conditions, math, or multiple related fields.
-* Forgetting the default field separator is whitespace (including runs of multiple spaces treated as one separator) — for real CSVs, set `-F','` explicitly, and be aware that quoted fields containing commas still aren't handled correctly by plain `awk`.
-* Not using `END { }` for aggregation — beginners sometimes try to print a running sum on every line instead of accumulating it and printing once at the end.
+* Using `awk` for something `cut` already does more simply: if you're just extracting one fixed field with a simple delimiter, `cut` is more obvious; reach for `awk` once you need conditions, math, or multiple related fields.
+* Forgetting the default field separator is whitespace (including runs of multiple spaces treated as one separator): for real CSVs, set `-F','` explicitly, and be aware that quoted fields containing commas still aren't handled correctly by plain `awk`.
+* Not using `END { }` for aggregation: beginners sometimes try to print a running sum on every line instead of accumulating it and printing once at the end.
 
 ## Related Commands
 
-* `sed` — pattern-based substitution without field awareness
-* `cut` — simpler field extraction, no conditions or math
-* `perl` / `python` — for text processing beyond what a one-liner can comfortably express
+* `sed`: pattern-based substitution without field awareness
+* `cut`: simpler field extraction, no conditions or math
+* `perl` / `python`: for text processing beyond what a one-liner can comfortably express
 
 ## Practice
 

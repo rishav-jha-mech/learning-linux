@@ -8,7 +8,7 @@ Searches for files and directories matching criteria, walking a directory tree.
 
 ## Mental Model
 
-`find` walks every file and directory under a starting path and tests each one against conditions you give it (name, type, size, age, and more). Unlike `ls`, it's built for scripting — safe with unusual filenames and able to act on what it finds.
+`find` walks every file and directory under a starting path and tests each one against conditions you give it (name, type, size, age, and more). Unlike `ls`, it's built for scripting: safe with unusual filenames and able to act on what it finds.
 
 ## Syntax
 
@@ -38,7 +38,7 @@ Prints every `.log` file under the current directory, recursively.
 
 ## How It Works
 
-`find` recursively calls `readdir()` on each directory it encounters, testing every entry against your conditions as it goes — it doesn't build a full list first, it evaluates and (optionally) acts on each match as it's found. This streaming behavior is why `find ... -delete` can safely process millions of files without loading them all into memory at once.
+`find` recursively calls `readdir()` on each directory it encounters, testing every entry against your conditions as it goes. It doesn't build a full list first; it evaluates and (optionally) acts on each match as it's found. This streaming behavior is why `find ... -delete` can safely process millions of files without loading them all into memory at once.
 
 ## Real-World Examples
 
@@ -62,19 +62,19 @@ find . -name "*.sh" -exec chmod +x {} \;
 find . -name "*.log" | xargs wc -l
 ```
 
-Feed matched filenames into another command. `xargs` is often paired with `find` for this — though `find -exec` can do the same thing more safely with unusual filenames.
+Feed matched filenames into another command. `xargs` is often paired with `find` for this, though `find -exec` can do the same thing more safely with unusual filenames.
 
 ## Common Mistakes
 
-* Parsing `ls` output when `find` would be the safe, script-friendly choice — `find -print0` piped to `xargs -0` correctly handles filenames with spaces or newlines, where naive `ls` parsing breaks.
-* Running `find / -delete` conditions without testing them first — always run the search without `-delete` first to confirm the match list is what you expect.
-* Forgetting `2>/dev/null` when searching from `/` — you'll get a wall of "Permission denied" errors from directories you can't read.
+* Parsing `ls` output when `find` would be the safe, script-friendly choice: `find -print0` piped to `xargs -0` correctly handles filenames with spaces or newlines, where naive `ls` parsing breaks.
+* Running `find / -delete` conditions without testing them first: always run the search without `-delete` first to confirm the match list is what you expect.
+* Forgetting `2>/dev/null` when searching from `/`: you'll get a wall of "Permission denied" errors from directories you can't read.
 
 ## Related Commands
 
-* `locate` — much faster file search using a prebuilt index, but can be stale
-* `grep -r` — search file *contents* recursively, rather than filenames
-* `xargs` — build and run commands from `find`'s output
+* `locate`: much faster file search using a prebuilt index, but can be stale
+* `grep -r`: search file *contents* recursively, rather than filenames
+* `xargs`: build and run commands from `find`'s output
 
 ## Practice
 

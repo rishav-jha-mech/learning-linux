@@ -8,7 +8,7 @@ Views file contents one screen at a time, with the ability to scroll and search.
 
 ## Mental Model
 
-Where `cat` dumps everything at once, `less` shows you a window into the file and lets you move that window around — forward, backward, or jump straight to a search match. It only reads as much of the file as it needs to display, so it opens huge files instantly.
+Where `cat` dumps everything at once, `less` shows you a window into the file and lets you move that window around: forward, backward, or jump straight to a search match. It only reads as much of the file as it needs to display, so it opens huge files instantly.
 
 ## Syntax
 
@@ -39,7 +39,7 @@ Opens the file in a pager. Common keys once inside:
 | Option | Meaning |
 | --- | --- |
 | `-N` | Show line numbers |
-| `-S` | Don't wrap long lines — scroll horizontally instead |
+| `-S` | Don't wrap long lines: scroll horizontally instead |
 | `-i` | Case-insensitive search |
 
 ## How It Works
@@ -62,19 +62,19 @@ less +/ERROR app.log
 grep "timeout" server.log | less
 ```
 
-Filter first, then page through just the matching lines — useful when a plain `grep` produces more output than fits on one screen.
+Filter first, then page through just the matching lines: useful when a plain `grep` produces more output than fits on one screen.
 
 ## Common Mistakes
 
-* Using `cat file | less` instead of `less file` — unnecessary when you're viewing a single file directly.
-* Forgetting `q` quits `less` — beginners sometimes get "stuck" not realizing they're inside a pager.
+* Using `cat file | less` instead of `less file`: unnecessary when you're viewing a single file directly.
+* Forgetting `q` quits `less`: beginners sometimes get "stuck" not realizing they're inside a pager.
 * Not knowing `/pattern` search exists and scrolling manually through a huge file instead.
 
 ## Related Commands
 
-* `more` — an older, more limited pager that `less` improves on ("less is more")
-* `cat` — dump a whole file at once, no paging
-* `head` / `tail` — view just a portion of a file without a pager
+* `more`: an older, more limited pager that `less` improves on ("less is more")
+* `cat`: dump a whole file at once, no paging
+* `head` / `tail`: view just a portion of a file without a pager
 
 ## Practice
 

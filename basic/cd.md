@@ -8,7 +8,7 @@ Changes the shell's current working directory.
 
 ## Mental Model
 
-Your shell always has a "current directory" it uses to resolve relative paths. `cd` updates that value. It only affects the shell it's run in — it can't change the directory of your parent shell or any other process.
+Your shell always has a "current directory" it uses to resolve relative paths. `cd` updates that value. It only affects the shell it's run in: it can't change the directory of your parent shell or any other process.
 
 ## Syntax
 
@@ -40,11 +40,11 @@ Running `cd` with no arguments takes you to your home directory (`$HOME`).
 | `cd ..` | Go up one directory |
 | `cd ~user` | Go to another user's home directory |
 
-`cd` is a shell builtin, not a separate program — it has to be, since a separate process couldn't change its parent shell's state.
+`cd` is a shell builtin, not a separate program: it has to be, since a separate process couldn't change its parent shell's state.
 
 ## How It Works
 
-`cd` calls the `chdir()` system call, which updates the *process's* current working directory in the kernel. Because it's a builtin, it changes the shell process itself rather than spawning a child. This is also why `cd` inside a script only affects that script's subshell, not the shell that launched it — once the script exits, you're back wherever you started.
+`cd` calls the `chdir()` system call, which updates the *process's* current working directory in the kernel. Because it's a builtin, it changes the shell process itself rather than spawning a child. This is also why `cd` inside a script only affects that script's subshell, not the shell that launched it. Once the script exits, you're back wherever you started.
 
 ## Real-World Examples
 
@@ -69,19 +69,19 @@ cd -   # back to /etc
 cd /tmp && mkdir scratch && cd scratch
 ```
 
-`&&` chains commands so each only runs if the previous succeeded — useful to avoid creating a directory in the wrong place if `cd` fails.
+`&&` chains commands so each only runs if the previous succeeded: useful to avoid creating a directory in the wrong place if `cd` fails.
 
 ## Common Mistakes
 
-* Expecting `cd` inside a script to change the directory of the shell that called the script — it won't, since the script runs in its own subshell.
-* Using `cd` in scripts without checking it succeeded — if the target doesn't exist, `cd` fails but the rest of the script may keep running against the wrong directory. Prefer `cd /some/path || exit 1` in scripts.
+* Expecting `cd` inside a script to change the directory of the shell that called the script: it won't, since the script runs in its own subshell.
+* Using `cd` in scripts without checking it succeeded: if the target doesn't exist, `cd` fails but the rest of the script may keep running against the wrong directory. Prefer `cd /some/path || exit 1` in scripts.
 * Forgetting `cd -` exists and manually retyping long paths to go back.
 
 ## Related Commands
 
-* `pwd` — show the current directory
-* `pushd` / `popd` — maintain a stack of directories to jump between
-* `ls` — see what's in the directory you just moved into
+* `pwd`: show the current directory
+* `pushd` / `popd`: maintain a stack of directories to jump between
+* `ls`: see what's in the directory you just moved into
 
 ## Practice
 

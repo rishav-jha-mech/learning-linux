@@ -8,7 +8,7 @@ Show which processes have which files (or ports) open right now.
 
 ## Mental Model
 
-Almost everything a process touches — regular files, directories, network sockets, pipes — is represented as an open file descriptor. `lsof` ("list open files") and `fuser` both answer the question "who's using this?", starting from either a process or a file/port.
+Almost everything a process touches (regular files, directories, network sockets, pipes) is represented as an open file descriptor. `lsof` ("list open files") and `fuser` both answer the question "who's using this?", starting from either a process or a file/port.
 
 ## Syntax
 
@@ -53,13 +53,13 @@ Shows every process currently holding that specific file open.
 
 | Option | Meaning |
 | --- | --- |
-| `-v` | Verbose — show user and command for each process |
+| `-v` | Verbose: show user and command for each process |
 | `-k` | Kill every process using the file (use with caution) |
 | `-m` | Treat the argument as a mounted filesystem, listing everything using it |
 
 ## How It Works
 
-Every open file, socket, or pipe a process holds is tracked by the kernel and exposed under `/proc/PID/fd/` as symbolic links. `lsof` and `fuser` both walk this information across all running processes to answer "what's open, and by whom" — `lsof` is more general-purpose and detailed, `fuser` is more narrowly focused on "who's using this specific file/mount/port."
+Every open file, socket, or pipe a process holds is tracked by the kernel and exposed under `/proc/PID/fd/` as symbolic links. `lsof` and `fuser` both walk this information across all running processes to answer "what's open, and by whom": `lsof` is more general-purpose and detailed, `fuser` is more narrowly focused on "who's using this specific file/mount/port."
 
 ## Real-World Examples
 
@@ -83,19 +83,19 @@ fuser -k /var/lock/myapp.lock
 lsof -i :8080 | awk 'NR>1 {print $2}' | xargs kill
 ```
 
-Find and kill whatever process is occupying a port you need to free up — common when a previous run of a dev server didn't shut down cleanly.
+Find and kill whatever process is occupying a port you need to free up, common when a previous run of a dev server didn't shut down cleanly.
 
 ## Common Mistakes
 
 * Trying to `umount` a device and getting "device is busy" without checking `fuser -m` first to see what's actually holding it open.
-* Using `fuser -k` carelessly — it kills every process using the target, which can include things you didn't intend to touch; check with plain `fuser -v` first.
-* Forgetting `lsof -i` needs a colon before the port number (`:8080`, not `8080`) — a common typo that silently returns nothing instead of erroring clearly.
+* Using `fuser -k` carelessly: it kills every process using the target, which can include things you didn't intend to touch; check with plain `fuser -v` first.
+* Forgetting `lsof -i` needs a colon before the port number (`:8080`, not `8080`), a common typo that silently returns nothing instead of erroring clearly.
 
 ## Related Commands
 
-* `ss` — focused specifically on network sockets, a narrower but often faster alternative for port-related questions
-* `ps` — see running processes without the "what files are open" angle
-* `/proc/PID/fd/` — the raw data both tools ultimately read from, browsable directly
+* `ss`: focused specifically on network sockets, a narrower but often faster alternative for port-related questions
+* `ps`: see running processes without the "what files are open" angle
+* `/proc/PID/fd/`: the raw data both tools ultimately read from, browsable directly
 
 ## Practice
 

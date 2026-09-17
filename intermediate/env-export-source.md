@@ -8,7 +8,7 @@ Inspect, set, and load environment variables and shell configuration.
 
 ## Mental Model
 
-Every process has a set of environment variables — key/value pairs passed down to it when it starts, and inherited by any process it spawns. `export` promotes a shell variable into that inherited environment; `env` shows what's currently in it; `source` runs a script's commands in your *current* shell instead of a new subprocess, so any variables it sets stick around.
+Every process has a set of environment variables: key/value pairs passed down to it when it starts, and inherited by any process it spawns. `export` promotes a shell variable into that inherited environment; `env` shows what's currently in it; `source` runs a script's commands in your *current* shell instead of a new subprocess, so any variables it sets stick around.
 
 ## Syntax
 
@@ -43,7 +43,7 @@ API_KEY=abc123
 
 ## How It Works
 
-When a process starts another process (via `fork()` + `exec()`), the kernel copies the parent's environment into the child. A shell variable that isn't `export`ed lives only in the shell's own memory and never gets copied anywhere — `export` is what flags it to be included in that copy. `source` (or `.`) works differently from running a script normally: `./script.sh` executes it as a *new* process, so anything it sets vanishes when it exits; `source script.sh` runs its commands directly in your current shell, so variable and directory changes persist afterward.
+When a process starts another process (via `fork()` + `exec()`), the kernel copies the parent's environment into the child. A shell variable that isn't `export`ed lives only in the shell's own memory and never gets copied anywhere: `export` is what flags it to be included in that copy. `source` (or `.`) works differently from running a script normally: `./script.sh` executes it as a *new* process, so anything it sets vanishes when it exits; `source script.sh` runs its commands directly in your current shell, so variable and directory changes persist afterward.
 
 ## Real-World Examples
 
@@ -64,19 +64,19 @@ source .env
 export PATH="$HOME/bin:$PATH"
 ```
 
-Prepend a directory to `$PATH` — one of the most common `export` uses, making your own scripts runnable by name.
+Prepend a directory to `$PATH`, one of the most common `export` uses, making your own scripts runnable by name.
 
 ## Common Mistakes
 
-* Setting `VAR=value` without `export` and being confused why a subprocess (like a script or another program) doesn't see it — only exported variables are inherited.
-* Running a script with `./setup.sh` when you meant `source setup.sh` — if the script's purpose is to set environment variables for your current session, running it as a subprocess means those variables disappear the moment it finishes.
+* Setting `VAR=value` without `export` and being confused why a subprocess (like a script or another program) doesn't see it: only exported variables are inherited.
+* Running a script with `./setup.sh` when you meant `source setup.sh`: if the script's purpose is to set environment variables for your current session, running it as a subprocess means those variables disappear the moment it finishes.
 * Permanently exporting secrets in shell startup files (`.bashrc`, `.zshrc`) that then leak into `env` output, shell history, or crash dumps more broadly than intended.
 
 ## Related Commands
 
-* `printenv` — similar to `env`, print environment variables
-* `unset` — remove a variable entirely
-* `alias` — define a shorthand command, a different mechanism from environment variables
+* `printenv`: similar to `env`, print environment variables
+* `unset`: remove a variable entirely
+* `alias`: define a shorthand command, a different mechanism from environment variables
 
 ## Practice
 

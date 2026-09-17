@@ -8,7 +8,7 @@ Bundle multiple files into one archive (`tar`, `zip`) and/or compress them (`gzi
 
 ## Mental Model
 
-Archiving and compression are two different problems that Linux tooling historically kept separate: `tar` bundles many files into one file (with no compression by itself), and `gzip` compresses a single file. Combining them — `tar` a directory, then `gzip` the result — is where "tarball" (`.tar.gz`) comes from. `zip` does both jobs at once in a single format, which is why it's more common cross-platform (e.g. with Windows).
+Archiving and compression are two different problems that Linux tooling historically kept separate: `tar` bundles many files into one file (with no compression by itself), and `gzip` compresses a single file. Combining them (`tar` a directory, then `gzip` the result) is where "tarball" (`.tar.gz`) comes from. `zip` does both jobs at once in a single format, which is why it's more common cross-platform (e.g. with Windows).
 
 ## Syntax
 
@@ -43,7 +43,7 @@ Extracts it: e`x`tract, `z` gzip, `v`erbose, `f`ile.
 | `-c` | Create an archive |
 | `-x` | Extract an archive |
 | `-z` | Compress/decompress with gzip |
-| `-v` | Verbose — list files as they're processed |
+| `-v` | Verbose: list files as they're processed |
 | `-f` | Specify the archive filename (almost always needed) |
 | `-t` | List an archive's contents without extracting |
 
@@ -56,7 +56,7 @@ Extracts it: e`x`tract, `z` gzip, `v`erbose, `f`ile.
 
 ## How It Works
 
-`tar` originally stood for "tape archive" — it serializes files (with their metadata: permissions, ownership, timestamps) into one continuous stream, historically for writing to tape drives. That's why `tar` alone doesn't compress: compression was always meant to be a separate, composable step (`tar` output piped through `gzip`), following the Unix philosophy of small tools doing one job. `zip`, developed separately, bundles the archiving and compression logic together into a single format instead.
+`tar` originally stood for "tape archive": it serializes files (with their metadata: permissions, ownership, timestamps) into one continuous stream, historically for writing to tape drives. That's why `tar` alone doesn't compress: compression was always meant to be a separate, composable step (`tar` output piped through `gzip`), following the Unix philosophy of small tools doing one job. `zip`, developed separately, bundles the archiving and compression logic together into a single format instead.
 
 ## Real-World Examples
 
@@ -87,15 +87,15 @@ Stream a compressed archive directly to a remote machine over SSH without creati
 
 ## Common Mistakes
 
-* Forgetting `-z` when extracting a `.tar.gz` — `tar -xvf` alone won't decompress gzip data, since `tar` needs to be told the archive is also compressed.
-* Not checking an archive's contents (`tar -tzvf` or `unzip -l`) before extracting into a shared or important directory — a poorly-structured archive can scatter files unexpectedly if it wasn't created with a single top-level folder.
-* Assuming `gzip` keeps the original file — by default `gzip file` compresses in place and deletes the original, replacing it with `file.gz` (use `gzip -k` to keep both).
+* Forgetting `-z` when extracting a `.tar.gz`: `tar -xvf` alone won't decompress gzip data, since `tar` needs to be told the archive is also compressed.
+* Not checking an archive's contents (`tar -tzvf` or `unzip -l`) before extracting into a shared or important directory: a poorly-structured archive can scatter files unexpectedly if it wasn't created with a single top-level folder.
+* Assuming `gzip` keeps the original file: by default `gzip file` compresses in place and deletes the original, replacing it with `file.gz` (use `gzip -k` to keep both).
 
 ## Related Commands
 
-* `xz` — a newer, typically higher-compression-ratio alternative to gzip
-* `rsync` — for transferring files, often preferred over archive+copy for large or repeated transfers
-* `7z` — a general-purpose archiver supporting many formats
+* `xz`: a newer, typically higher-compression-ratio alternative to gzip
+* `rsync`: for transferring files, often preferred over archive+copy for large or repeated transfers
+* `7z`: a general-purpose archiver supporting many formats
 
 ## Practice
 

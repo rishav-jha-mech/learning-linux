@@ -8,7 +8,7 @@ Traces every system call a program makes, showing exactly how it talks to the ke
 
 ## Mental Model
 
-A program's visible behavior is the result of many system calls underneath — opening files, reading input, allocating memory, making network connections. `strace` intercepts and logs each of these as they happen, giving you a ground-truth view of what a program is actually doing, independent of what its own logs or documentation claim.
+A program's visible behavior is the result of many system calls underneath: opening files, reading input, allocating memory, making network connections. `strace` intercepts and logs each of these as they happen, giving you a ground-truth view of what a program is actually doing, independent of what its own logs or documentation claim.
 
 ## Syntax
 
@@ -32,7 +32,7 @@ write(1, "myhost\n", 7)                = 7
 close(3)                                = 0
 ```
 
-You can see `cat` open the file, read its contents, write them to stdout, and close the file — each step as a real system call with its actual arguments and return value.
+You can see `cat` open the file, read its contents, write them to stdout, and close the file, each step as a real system call with its actual arguments and return value.
 
 ## Common Options
 
@@ -47,7 +47,7 @@ You can see `cat` open the file, read its contents, write them to stdout, and cl
 
 ## How It Works
 
-`strace` uses the kernel's `ptrace()` system call to intercept every system call a traced process makes, pausing execution at each entry and exit to record the call, its arguments, and its result. This is powerful but has real overhead — a traced process runs meaningfully slower, since every syscall now involves an extra round-trip through the tracer. That overhead is why `strace` is a debugging tool, not something you'd run permanently in production.
+`strace` uses the kernel's `ptrace()` system call to intercept every system call a traced process makes, pausing execution at each entry and exit to record the call, its arguments, and its result. This is powerful but has real overhead: a traced process runs meaningfully slower, since every syscall now involves an extra round-trip through the tracer. That overhead is why `strace` is a debugging tool, not something you'd run permanently in production.
 
 ## Real-World Examples
 
@@ -75,15 +75,15 @@ Filter a trace down to just the network-related syscalls, useful when debugging 
 
 ## Common Mistakes
 
-* Reaching for `strace` on a performance problem when you actually need a profiler — `strace` shows *what* syscalls happen and their timing, but its own overhead skews fine-grained performance measurements; tools like `perf` are better suited for that.
-* Not using `-f` when the process you're tracing spawns children — without it, you only see the parent process's syscalls, missing anything the actual work happens in a forked child.
-* Running `strace` on a production process without understanding its slowdown — attaching `strace -p` to a live, latency-sensitive service can itself cause timeouts or degraded behavior.
+* Reaching for `strace` on a performance problem when you actually need a profiler. `strace` shows *what* syscalls happen and their timing, but its own overhead skews fine-grained performance measurements; tools like `perf` are better suited for that.
+* Not using `-f` when the process you're tracing spawns children. Without it, you only see the parent process's syscalls, missing anything the actual work happens in a forked child.
+* Running `strace` on a production process without understanding its slowdown. Attaching `strace -p` to a live, latency-sensitive service can itself cause timeouts or degraded behavior.
 
 ## Related Commands
 
-* `ltrace` — similar concept, but traces library calls instead of syscalls
-* `perf` — proper performance profiling with much lower overhead
-- `lsof` — see what files/sockets a process currently has open, a snapshot rather than a live trace
+* `ltrace`: similar concept, but traces library calls instead of syscalls
+* `perf`: proper performance profiling with much lower overhead
+- `lsof`: see what files/sockets a process currently has open, a snapshot rather than a live trace
 
 ## Practice
 

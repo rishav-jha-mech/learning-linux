@@ -8,7 +8,7 @@ Moves or renames a file or directory.
 
 ## Mental Model
 
-`mv` and renaming are the same operation in Linux — a "rename" is just a move to a new name within the same directory. There's no separate rename command because the filesystem doesn't distinguish the two.
+`mv` and renaming are the same operation in Linux: a "rename" is just a move to a new name within the same directory. There's no separate rename command because the filesystem doesn't distinguish the two.
 
 ## Syntax
 
@@ -30,7 +30,7 @@ Output:
 final.txt
 ```
 
-The file's content and inode are untouched — only its directory entry changes.
+The file's content and inode are untouched: only its directory entry changes.
 
 ## Common Options
 
@@ -42,7 +42,7 @@ The file's content and inode are untouched — only its directory entry changes.
 
 ## How It Works
 
-When source and destination are on the same filesystem, `mv` calls `rename()`, which just updates directory entries — no data is copied, so it's instant regardless of file size. When moving across filesystems (e.g. from `/` to a different mounted disk), `rename()` can't work across devices, so `mv` falls back to copying the data and then deleting the original — which is why moving a large file to another drive can be noticeably slower than moving it within the same drive.
+When source and destination are on the same filesystem, `mv` calls `rename()`, which just updates directory entries: no data is copied, so it's instant regardless of file size. When moving across filesystems (e.g. from `/` to a different mounted disk), `rename()` can't work across devices, so `mv` falls back to copying the data and then deleting the original, which is why moving a large file to another drive can be noticeably slower than moving it within the same drive.
 
 ## Real-World Examples
 
@@ -67,15 +67,15 @@ Back up by renaming, then create a fresh file with the original name.
 
 ## Common Mistakes
 
-* Moving a file onto an existing filename and overwriting it without warning — use `-i` if you want a safety prompt.
-* Expecting a progress bar on large cross-filesystem moves — plain `mv` gives no feedback; use `rsync --progress` if you need that.
-* Confusing "move" with "copy" — after `mv`, the original path no longer exists at all.
+* Moving a file onto an existing filename and overwriting it without warning: use `-i` if you want a safety prompt.
+* Expecting a progress bar on large cross-filesystem moves: plain `mv` gives no feedback; use `rsync --progress` if you need that.
+* Confusing "move" with "copy": after `mv`, the original path no longer exists at all.
 
 ## Related Commands
 
-* `cp` — duplicate instead of moving
-* `rsync` — move/sync with progress and resumability, especially across filesystems
-* `rename` — batch rename using patterns (not on all distros by default)
+* `cp`: duplicate instead of moving
+* `rsync`: move/sync with progress and resumability, especially across filesystems
+* `rename`: batch rename using patterns (not on all distros by default)
 
 ## Practice
 

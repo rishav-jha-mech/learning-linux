@@ -49,7 +49,7 @@ Names are printed in columns, sorted alphabetically by default.
 
 ## How It Works
 
-`ls` opens the directory and reads its entries via the `readdir()` system call — a directory is really just a special file the kernel maintains, mapping names to inode numbers. For `-l`, `ls` then calls `stat()` on each entry to fetch permissions, size, and timestamps, which is why `ls -l` on a huge directory is noticeably slower than plain `ls`.
+`ls` opens the directory and reads its entries via the `readdir()` system call. A directory is really just a special file the kernel maintains, mapping names to inode numbers. For `-l`, `ls` then calls `stat()` on each entry to fetch permissions, size, and timestamps, which is why `ls -l` on a huge directory is noticeably slower than plain `ls`.
 
 ## Real-World Examples
 
@@ -70,7 +70,7 @@ ls -la ~
 ls -la | grep '^d'
 ```
 
-Filters `ls -la` output down to lines starting with `d` — directories only (fragile in general, since it depends on column position, but common for quick checks).
+Filters `ls -la` output down to lines starting with `d`: directories only (fragile in general, since it depends on column position, but common for quick checks).
 
 ```bash
 ls -t | head -5
@@ -81,15 +81,15 @@ Shows the 5 most recently modified entries.
 ## Common Mistakes
 
 * Forgetting `-a` and assuming a directory is empty when it only contains dotfiles.
-* Parsing `ls` output in scripts — filenames can contain spaces, newlines, or glob characters, which breaks naive parsing. Use `find` or shell globbing instead for anything script-critical.
-* Confusing `-l`'s size column with actual disk usage — it shows the file's logical size, not blocks consumed on disk (`du` shows that).
+* Parsing `ls` output in scripts: filenames can contain spaces, newlines, or glob characters, which breaks naive parsing. Use `find` or shell globbing instead for anything script-critical.
+* Confusing `-l`'s size column with actual disk usage: it shows the file's logical size, not blocks consumed on disk (`du` shows that).
 
 ## Related Commands
 
-* `cd` — change directory
-* `find` — search for files by criteria, safe for scripting
-* `du` — show actual disk usage
-* `stat` — show detailed metadata for a single file
+* `cd`: change directory
+* `find`: search for files by criteria, safe for scripting
+* `du`: show actual disk usage
+* `stat`: show detailed metadata for a single file
 
 ## Practice
 

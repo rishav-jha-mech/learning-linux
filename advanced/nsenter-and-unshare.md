@@ -4,11 +4,11 @@ sidebar_position: 7
 
 # nsenter and unshare
 
-Enter another process's namespaces (`nsenter`) or create new isolated namespaces (`unshare`) — the low-level building blocks containers are made from.
+Enter another process's namespaces (`nsenter`) or create new isolated namespaces (`unshare`): the low-level building blocks containers are made from.
 
 ## Mental Model
 
-A "container" isn't a special kernel object — it's a regular process running inside a set of namespaces that give it its own isolated view of process IDs, network interfaces, mounts, hostname, and more. `unshare` creates and enters new namespaces from scratch; `nsenter` jumps into the namespaces an *existing* process (e.g. a running container) is already using.
+A "container" isn't a special kernel object. It's a regular process running inside a set of namespaces that give it its own isolated view of process IDs, network interfaces, mounts, hostname, and more. `unshare` creates and enters new namespaces from scratch; `nsenter` jumps into the namespaces an *existing* process (e.g. a running container) is already using.
 
 ## Syntax
 
@@ -23,13 +23,13 @@ nsenter [options] command
 unshare --pid --fork --mount-proc bash
 ```
 
-Starts a new `bash` shell inside its own PID namespace — inside it, this shell sees itself as PID 1, and can't see any of the host's other processes.
+Starts a new `bash` shell inside its own PID namespace: inside it, this shell sees itself as PID 1, and can't see any of the host's other processes.
 
 ```bash
 nsenter -t PID -n ip addr
 ```
 
-Runs `ip addr` inside the network namespace of process `PID` — showing you the network interfaces visible from *inside* that container, not the host's.
+Runs `ip addr` inside the network namespace of process `PID`, showing you the network interfaces visible from *inside* that container, not the host's.
 
 ## Common Options
 
@@ -54,7 +54,7 @@ Runs `ip addr` inside the network namespace of process `PID` — showing you the
 
 ## How It Works
 
-Linux namespaces are a kernel feature that give a process a private view of a specific kind of global resource — the PID namespace virtualizes process IDs, the network namespace virtualizes interfaces and routing tables, the mount namespace virtualizes the filesystem tree, and so on. Container runtimes (Docker, containerd, etc.) are, underneath, orchestrating exactly these primitives: creating a set of namespaces via `clone()`/`unshare()` syscalls and starting a process inside them. `nsenter` uses `setns()` to attach the calling process to another process's already-existing namespaces — this is literally how tools like `docker exec` work under the hood.
+Linux namespaces are a kernel feature that give a process a private view of a specific kind of global resource: the PID namespace virtualizes process IDs, the network namespace virtualizes interfaces and routing tables, the mount namespace virtualizes the filesystem tree, and so on. Container runtimes (Docker, containerd, etc.) are, underneath, orchestrating exactly these primitives: creating a set of namespaces via `clone()`/`unshare()` syscalls and starting a process inside them. `nsenter` uses `setns()` to attach the calling process to another process's already-existing namespaces. This is literally how tools like `docker exec` work under the hood.
 
 ## Real-World Examples
 
@@ -79,15 +79,15 @@ Test connectivity to a service exactly as it appears from inside a specific cont
 
 ## Common Mistakes
 
-* Forgetting `--fork` with `unshare --pid` — the PID namespace won't behave correctly without forking a new process into it as PID 1.
-* Assuming a process is fully isolated just because it's in a new PID namespace — namespaces isolate specific resources independently; a process might have its own PID namespace but still share the host's network or filesystem unless those are unshared too.
-* Confusing containers with virtual machines — namespaces (plus cgroups for resource limits) provide isolation on the *same* kernel; there's no separate OS or hardware virtualization involved, which is why containers start almost instantly compared to VMs.
+* Forgetting `--fork` with `unshare --pid`: the PID namespace won't behave correctly without forking a new process into it as PID 1.
+* Assuming a process is fully isolated just because it's in a new PID namespace: namespaces isolate specific resources independently; a process might have its own PID namespace but still share the host's network or filesystem unless those are unshared too.
+* Confusing containers with virtual machines: namespaces (plus cgroups for resource limits) provide isolation on the *same* kernel; there's no separate OS or hardware virtualization involved, which is why containers start almost instantly compared to VMs.
 
 ## Related Commands
 
-* `docker exec` / `docker inspect` — higher-level tools built on these same primitives
-* [cgroups, namespaces, and capabilities](/docs/advanced/cgroups-namespaces-capabilities) — resource limiting and privilege control, complementary to namespace isolation
-* `chroot` — an older, more limited form of filesystem isolation, a precursor to mount namespaces
+* `docker exec` / `docker inspect`: higher-level tools built on these same primitives
+* [cgroups, namespaces, and capabilities](/docs/advanced/cgroups-namespaces-capabilities): resource limiting and privilege control, complementary to namespace isolation
+* `chroot`: an older, more limited form of filesystem isolation, a precursor to mount namespaces
 
 ## Practice
 

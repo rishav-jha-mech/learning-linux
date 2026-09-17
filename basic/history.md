@@ -71,15 +71,15 @@ Find the last few `docker run` invocations you typed, useful when you don't reme
 
 ## Common Mistakes
 
-* Assuming `history` shows commands from other terminal sessions in real time — by default each shell session's history is only written to disk when that session exits, so commands from a currently-open second terminal may not show up yet.
-* Forgetting sensitive commands (with passwords or tokens typed inline) get saved to your history file in plain text — avoid typing secrets directly on the command line.
+* Assuming `history` shows commands from other terminal sessions in real time: by default each shell session's history is only written to disk when that session exits, so commands from a currently-open second terminal may not show up yet.
+* Forgetting sensitive commands (with passwords or tokens typed inline) get saved to your history file in plain text: avoid typing secrets directly on the command line.
 * Not knowing `Ctrl+R` exists and scrolling through hundreds of history entries manually.
 
 ## Related Commands
 
-* `!!` / `!N` — shell history expansion, not a separate command but closely tied to `history`
-* `fc` — edit and re-run a previous command in your `$EDITOR`
-* `alias` — save a frequently-used command permanently instead of relying on history to find it again
+* `!!` / `!N`: shell history expansion, not a separate command but closely tied to `history`
+* `fc`: edit and re-run a previous command in your `$EDITOR`
+* `alias`: save a frequently-used command permanently instead of relying on history to find it again
 
 ## Practice
 

@@ -24,7 +24,7 @@ sar [options]
 vmstat 2 5
 ```
 
-Prints 5 samples of system stats, 2 seconds apart — CPU, memory, swap, and I/O activity in one compact table.
+Prints 5 samples of system stats, 2 seconds apart: CPU, memory, swap, and I/O activity in one compact table.
 
 ```bash
 iostat -x 2
@@ -40,7 +40,7 @@ Shows extended per-disk I/O statistics, refreshing every 2 seconds.
 | --- | --- |
 | `r` | Processes waiting to run (queued for CPU) |
 | `free` | Free memory |
-| `si` / `so` | Swap in / swap out — nonzero here often means memory pressure |
+| `si` / `so` | Swap in / swap out: nonzero here often means memory pressure |
 | `us` / `sy` / `id` | % time in user code, kernel code, idle |
 
 `iostat`:
@@ -52,7 +52,7 @@ Shows extended per-disk I/O statistics, refreshing every 2 seconds.
 
 ## How It Works
 
-All three tools read the same kind of kernel-exposed statistics `top` and `ps` do — mostly from `/proc` (`/proc/stat`, `/proc/meminfo`, `/proc/diskstats`) — but aggregate them system-wide instead of per-process, and are built for sampling over an interval rather than a single snapshot. `sar` additionally can log this data continuously over time (via a background collector, `sysstat`), letting you look *backward* at what the system was doing hours or days ago, not just right now.
+All three tools read the same kind of kernel-exposed statistics `top` and `ps` do, mostly from `/proc` (`/proc/stat`, `/proc/meminfo`, `/proc/diskstats`), but aggregate them system-wide instead of per-process, and are built for sampling over an interval rather than a single snapshot. `sar` additionally can log this data continuously over time (via a background collector, `sysstat`), letting you look *backward* at what the system was doing hours or days ago, not just right now.
 
 ## Real-World Examples
 
@@ -77,15 +77,15 @@ Extract just the "idle CPU" column from repeated `vmstat` samples for quick scri
 
 ## Common Mistakes
 
-* Reading a single `vmstat` sample without an interval — the very first line reports *averages since boot*, not the current instant; always look at the second and later samples for current activity.
-* Seeing high `%util` in `iostat` and assuming the disk itself is failing — it usually just means the disk is busy/saturated, which could simply mean the workload is I/O-heavy, not that anything is wrong.
-* Not knowing `sar` needs the `sysstat` package's background collection enabled ahead of time — you can't retroactively see historical data unless logging was already running when the period you care about happened.
+* Reading a single `vmstat` sample without an interval: the very first line reports *averages since boot*, not the current instant; always look at the second and later samples for current activity.
+* Seeing high `%util` in `iostat` and assuming the disk itself is failing. It usually just means the disk is busy/saturated, which could simply mean the workload is I/O-heavy, not that anything is wrong.
+* Not knowing `sar` needs the `sysstat` package's background collection enabled ahead of time. You can't retroactively see historical data unless logging was already running when the period you care about happened.
 
 ## Related Commands
 
-* `top` / `htop` — per-process detail, complementary to these system-wide views
-* `free` — a quick, simpler view of memory usage alone
-* `dstat` — a more modern combined view, drawing together CPU/disk/network stats in one tool
+* `top` / `htop`: per-process detail, complementary to these system-wide views
+* `free`: a quick, simpler view of memory usage alone
+* `dstat`: a more modern combined view, drawing together CPU/disk/network stats in one tool
 
 ## Practice
 
